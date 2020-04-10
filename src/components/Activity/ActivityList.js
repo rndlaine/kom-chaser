@@ -25,6 +25,7 @@ const ActivityList = ({ activities, gearsById, isLoading }) => {
     </>
   );
 };
+
 ActivityCard.propTypes = {
   activities: PropTypes.array,
   gearsById: PropTypes.object,

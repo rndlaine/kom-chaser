@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import _ from 'lodash';
 
 import { getKOMRating } from '../helpers/KOMRatingHelpers';
@@ -8,30 +8,44 @@ import useGetRouteId from '../hooks/useGetRouteId';
 import stravaAgents from '../agents/stravaAgents';
 import EffortCard from '../components/Effort/EffortCard';
 import LoadingCard from '../components/Activity/LoadingCard';
+import ActivityContext from '../contexts/ActivityContext';
+import LeaderBoardContext from '../contexts/LeaderBoardContext';
 
 const Activity = ({ location }) => {
-  const [activity, setActivity] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useGetRouteId(location.pathname);
+  const { leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
+  const { activitiesDetailsById, setActivityDetails } = useContext(ActivityContext);
+
+  const activity = activitiesDetailsById[id] || {};
 
   useEffect(() => {
-    stravaAgents.getActivity(id).then(async activity => {
-      for (let i = 0; i < activity.segment_efforts.length; i++) {
-        const leaderboard = await stravaAgents.getSegmentLeaderBoard(activity.segment_efforts[i].segment.id);
-        activity.segment_efforts[i] = { ...activity.segment_efforts[i], leaderboard };
-      }
+    setIsLoading(true);
 
-      setActivity(activity);
-      setIsLoading(false);
-    });
+    if (!activitiesDetailsById[id]) {
+      stravaAgents.getActivity(id).then(async activity => {
+        setActivityDetails(activity);
+        setIsLoading(false);
+      });
+    }
   }, []);
 
-  const filteredEfforts = _.sortBy(activity.segment_efforts, [
-    effort => {
-      const { komScore } = getKOMRating(effort);
-      return 1 - komScore;
-    },
-  ]);
+  useEffect(() => {
+    if (!_.isEmpty(activity)) {
+      setIsLoading(true);
+
+      for (let i = 0; i < activity.segment_efforts.length; i++) {
+        const effort = activity.segment_efforts[i];
+        const segmentId = effort.segment.id;
+
+        if (!leaderboardBySegmentId[segmentId]) {
+          stravaAgents.getSegmentLeaderBoard(segmentId).then(leaderboard => setLeaderboard(segmentId, leaderboard));
+        }
+      }
+
+      setIsLoading(false);
+    }
+  }, [activity]);
 
   return (
     <Layout>
@@ -39,12 +53,19 @@ const Activity = ({ location }) => {
       <h1 className="label__header">{activity.name || 'Activity'} - Segments</h1>
       <section className="activity-list">
         {!isLoading &&
-          filteredEfforts &&
-          filteredEfforts.map(effort => {
-            const KOMRatingObject = getKOMRating(effort);
+          activity.segment_efforts &&
+          activity.segment_efforts.map(effort => {
+            const leaderboard = leaderboardBySegmentId[effort.segment.id];
 
-            return <EffortCard effort={effort} {...KOMRatingObject} />;
+            if (leaderboard) {
+              const KOMRatingObject = getKOMRating(effort, leaderboard);
+
+              return <EffortCard key={effort.segment.id} effort={effort} {...KOMRatingObject} />;
+            }
+
+            return <LoadingCard key={effort.segment.id} />;
           })}
+
         {isLoading && _.times(50, index => <LoadingCard key={index} />)}
         {!isLoading && !activity.segment_efforts && <span>Nothing to show...</span>}
       </section>

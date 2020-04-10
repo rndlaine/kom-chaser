@@ -1,6 +1,7 @@
 import moment from 'moment';
 
-export const getKOMRating = effort => {
+// TODO: Clean this
+export const getKOMRating = (effort, leaderboard) => {
   const effortTime = moment('2015-01-01')
     .startOf('day')
     .seconds(effort.elapsed_time)
@@ -8,15 +9,15 @@ export const getKOMRating = effort => {
 
   const komTime = moment('2015-01-01')
     .startOf('day')
-    .seconds(effort.leaderboard.entries[0].elapsed_time)
+    .seconds(leaderboard.entries[0].elapsed_time)
     .format('mm:ss');
 
   const timeToKom = moment('2015-01-01')
     .startOf('day')
-    .seconds(effort.elapsed_time - effort.leaderboard.entries[0].elapsed_time)
+    .seconds(effort.elapsed_time - leaderboard.entries[0].elapsed_time)
     .format('mm:ss');
 
-  const komScore = effort.leaderboard.entries[0].elapsed_time / effort.elapsed_time;
+  const komScore = leaderboard.entries[0].elapsed_time / effort.elapsed_time;
   let komRating = 'D';
   let komRatingColor = 'red';
   if (komScore > 0.7 && komScore < 0.85) {
