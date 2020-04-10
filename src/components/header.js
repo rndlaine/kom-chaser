@@ -3,14 +3,24 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import stravaLogo from '../images/strava-logo.png';
 
-const Header = ({ siteTitle }) => (
-  <header className="header">
-    <Link to="/" className="header__title">
-      <img style={{ width: 100 }} src={stravaLogo} />
-      {siteTitle}
-    </Link>
-  </header>
-);
+const Header = ({ siteTitle }) => {
+  const handleLogOffClick = () => {
+    localStorage.removeItem('expires_at');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('access_token');
+    window.location.replace('/');
+  };
+
+  return (
+    <header className="header">
+      <Link to="/" className="header__title">
+        <img style={{ width: 100 }} src={stravaLogo} />
+        {siteTitle}
+      </Link>
+      <button onClick={handleLogOffClick}>Log off</button>
+    </header>
+  );
+};
 
 Header.propTypes = {
   siteTitle: PropTypes.string,

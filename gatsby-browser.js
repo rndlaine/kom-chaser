@@ -1,7 +1,5 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
+import axios from 'axios';
 
-// You can delete this file if you're not using it
+axios.defaults.headers.common = {
+  Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+};
