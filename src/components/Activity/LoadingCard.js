@@ -1,7 +1,7 @@
 import React from 'react';
 
 const LoadingCard = () => (
-  <div className="activity-card --loading">
+  <div className="card --loading">
     <div class="spinner"></div>
   </div>
 );

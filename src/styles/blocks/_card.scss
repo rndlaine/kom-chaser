@@ -1,4 +1,4 @@
-.activity-card {
+.card {
   background-color: cc(palest);
   border-radius: rem(10);
   box-shadow: 10px 10px 15px -15px rgba(0, 0, 0, 0.5);
@@ -44,6 +44,7 @@
 
     &.--header {
       margin: 0;
+      align-items: center;
     }
   }
 
