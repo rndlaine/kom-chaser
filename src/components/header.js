@@ -14,7 +14,7 @@ const Header = ({ siteTitle }) => {
   return (
     <header className="header">
       <Link to="/" className="header__title">
-        <img style={{ width: 100 }} src={stravaLogo} />
+        <img className="header__logo" src={stravaLogo} />
         {siteTitle}
       </Link>
       <button onClick={handleLogOffClick}>Log off</button>
