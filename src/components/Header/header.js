@@ -7,7 +7,7 @@ import HeaderMenu from './HeaderMenu';
 const Header = ({ siteTitle, profile }) => {
   return (
     <header className="header">
-      <Link to="/" className="header__title">
+      <Link to="/app" className="header__title">
         <img className="header__logo" src={stravaLogo} />
         {siteTitle}
       </Link>

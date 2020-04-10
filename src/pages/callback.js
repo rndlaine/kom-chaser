@@ -15,7 +15,7 @@ const Callback = ({ location }) => {
         typeof window !== 'undefined' && localStorage.setItem('expires_at', expires_at);
         typeof window !== 'undefined' && localStorage.setItem('refresh_token', refresh_token);
         typeof window !== 'undefined' && localStorage.setItem('access_token', access_token);
-        navigate('/');
+        navigate('/app');
       })
       .catch(error => {
         console.error('Error: ', error);
