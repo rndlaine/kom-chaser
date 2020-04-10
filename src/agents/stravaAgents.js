@@ -29,7 +29,7 @@ export default {
     return result.data;
   },
   listActivities: async () => {
-    const result = await axios.get('https://www.strava.com/api/v3/athlete/activities?per_page=50', {
+    const result = await axios.get('https://www.strava.com/api/v3/athlete/activities?per_page=100', {
       headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
     });
 

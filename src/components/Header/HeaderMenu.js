@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import HeaderProfileButton from './HeaderProfileButton';
 
 const HeaderMenu = ({ profile }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,15 +15,8 @@ const HeaderMenu = ({ profile }) => {
   return (
     <>
       <button className="header__menu" onClick={() => setIsOpen(!isOpen)}>
-        {profile && (
-          <>
-            <span>
-              {profile.firstname} {profile.lastname}
-            </span>
-            <img src={profile.profile} className="header__image" />
-          </>
-        )}
-        {!profile && <div className="header__image" />}
+        {profile ? <HeaderProfileButton profile={profile} /> : <div className="header__image" />}
+
         {isOpen && (
           <button className="header__menu-open" onClick={handleLogOffClick}>
             Log off
