@@ -1,0 +1,26 @@
+.profile {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: rem(30);
+  border-radius: rem(10);
+  margin-top: rem(10);
+  box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
+  padding: rem(20);
+  background-color: cc(palest);
+
+  &__trait {
+    display: flex;
+    flex-direction: column;
+    margin: rem(10);
+    padding: rem(20);
+    flex: 1 0 10%;
+  }
+
+  &__trait-value {
+    @extend %font-type-label;
+  }
+
+  &__picture {
+    width: rem(150);
+  }
+}

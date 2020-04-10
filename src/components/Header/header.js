@@ -1,30 +1,24 @@
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
-import stravaLogo from '../images/strava-logo.png';
+import stravaLogo from '../../images/strava-logo.png';
+import HeaderMenu from './HeaderMenu';
 
-const Header = ({ siteTitle }) => {
-  const handleLogOffClick = () => {
-    localStorage.removeItem('expires_at');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('access_token');
-    window.location.replace('/');
-  };
-
+const Header = ({ siteTitle, profile }) => {
   return (
     <header className="header">
-      <span></span>
       <Link to="/" className="header__title">
         <img className="header__logo" src={stravaLogo} />
         {siteTitle}
       </Link>
-      <button onClick={handleLogOffClick}>Log off</button>
+      <HeaderMenu profile={profile} />
     </header>
   );
 };
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
+  profile: PropTypes.object,
 };
 
 Header.defaultProps = {

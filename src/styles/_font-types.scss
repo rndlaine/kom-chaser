@@ -8,10 +8,17 @@
   font-family: Gidole;
   font-size: rem(30);
   font-weight: 900;
+  text-decoration: underline cc(main);
 }
 
 %font-type-subheader {
   font-family: Gidole;
   font-size: rem(25);
+  font-weight: 900;
+}
+
+%font-type-label {
+  font-family: Gidole;
+  font-size: rem(20);
   font-weight: 900;
 }

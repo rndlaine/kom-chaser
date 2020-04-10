@@ -22,11 +22,15 @@ module.exports = {
         name: `gatsby-starter-default`,
         short_name: `starter`,
         start_url: `/`,
-        background_color: `#fc4c02`,
-        theme_color: `#fc4c02`,
+        background_color: `#fcfcfc`,
+        theme_color: `#fcfcfc`,
         display: `minimal-ui`,
         icon: `src/images/crown.png`, // This path is relative to the root of the site.
       },
+    },
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/activity/*`] },
     },
   ],
 };

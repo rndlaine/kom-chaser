@@ -4,16 +4,13 @@ import _ from 'lodash';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import stravaAgents from '../agents/stravaAgents';
-import smoke from '../images/smoke.jpg';
 import ActivityList from '../components/Activity/ActivityList';
 
 const IndexPage = () => {
-  const [profile, setProfile] = useState({});
   const [activities, setActivities] = useState([]);
   const [gearsById, setGearsById] = useState({});
 
   useEffect(() => {
-    stravaAgents.getProfile().then(profile => setProfile(profile));
     stravaAgents.listActivities().then(act => setActivities(act));
   }, []);
 
@@ -29,19 +26,6 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <img src={smoke} width={200} />
-      <img src={profile.profile} width={200} />
-
-      <p>Mon Profil</p>
-      {Object.keys(profile).map(key => (
-        <p key={key}>
-          {key}: {profile[key]}
-        </p>
-      ))}
-      <br />
-      <br />
-      <br />
-
       <ActivityList activities={activities} gearsById={gearsById} />
     </Layout>
   );

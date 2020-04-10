@@ -1,18 +1,47 @@
 .header {
   align-items: center;
+  box-shadow: 0px 0px 15px -10px cc(dark);
   display: flex;
-  padding: rem(20) rem(45);
   justify-content: space-between;
+  padding: 0 rem(45);
+  background-color: cc(palest);
 
   &__title {
-    @extend %font-type-title;
+    @extend %font-type-subheader;
     align-items: center;
-    color: cc(dark);
     display: flex;
-    text-decoration: none;
+    text-decoration: underline cc(main);
   }
 
   &__logo {
+    height: rem(25);
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    padding: rem(10);
+    position: relative;
+
+    &:hover {
+      box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
+    }
+  }
+
+  &__image {
     height: rem(40);
+    width: rem(40);
+    border-radius: 100%;
+    background-color: cc(dark);
+    margin-left: rem(20);
+  }
+
+  &__menu-open {
+    position: absolute;
+    top: rem(60);
+    left: 0;
+    background-color: white;
+    width: 100%;
+    padding: rem(20) rem(10);
   }
 }
