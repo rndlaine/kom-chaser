@@ -4,6 +4,7 @@
   display: flex;
   margin-bottom: rem(20);
   padding: rem(16);
+  justify-content: space-between;
 
   &__title {
     @extend %font-type-title;

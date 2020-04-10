@@ -22,7 +22,9 @@ export default {
     return result.data;
   },
   getProfile: async () => {
-    const result = await axios.get('https://www.strava.com/api/v3/athlete');
+    const result = await axios.get('https://www.strava.com/api/v3/athlete', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+    });
 
     return result.data;
   },

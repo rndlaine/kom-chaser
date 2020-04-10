@@ -22,10 +22,6 @@ const Layout = ({ children }) => {
     const refreshToken = localStorage.getItem('refresh_token');
     const currentTime = new Date().getTime() / 1000;
 
-    if (!expiresAt) {
-      window.location.replace(process.env.GATSBY_AUTHORIZE_URL);
-    }
-
     if (currentTime > expiresAt) {
       stravaAgents
         .refreshToken(refreshToken)
@@ -37,6 +33,8 @@ const Layout = ({ children }) => {
         .catch(() => {
           window.location.replace(process.env.GATSBY_AUTHORIZE_URL);
         });
+    } else if (!expiresAt) {
+      window.location.replace(process.env.GATSBY_AUTHORIZE_URL);
     }
   });
 

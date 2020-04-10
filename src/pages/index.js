@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -16,7 +16,7 @@ const IndexPage = () => {
       <SEO title="Home" />
       Mon Profil
       {Object.keys(profile).map(key => (
-        <p>
+        <p key={key}>
           {key}: {profile[key]}
         </p>
       ))}
