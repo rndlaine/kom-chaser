@@ -13,6 +13,7 @@ const Header = ({ siteTitle }) => {
 
   return (
     <header className="header">
+      <span></span>
       <Link to="/" className="header__title">
         <img className="header__logo" src={stravaLogo} />
         {siteTitle}

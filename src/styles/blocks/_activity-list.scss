@@ -1,0 +1,9 @@
+.activity-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 rem(-10);
+
+  &__header {
+    @extend %font-type-header;
+  }
+}

@@ -1,0 +1,32 @@
+.activity-card {
+  border: 1px solid cc(dark);
+  flex: 1 0 rem(300);
+  margin: rem(10);
+  padding: rem(20);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &__title {
+    @extend %font-type-subheader;
+  }
+
+  &__icon {
+    width: rem(45);
+  }
+
+  &__date {
+    margin: rem(15) 0;
+  }
+
+  &__stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

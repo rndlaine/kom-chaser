@@ -1,5 +1,17 @@
 %font-type-title {
-  font-family: Roboto-Bold;
-  font-size: rem(40);
+  font-family: Gidole;
+  font-size: rem(45);
+  font-weight: 900;
+}
+
+%font-type-header {
+  font-family: Gidole;
+  font-size: rem(30);
+  font-weight: 900;
+}
+
+%font-type-subheader {
+  font-family: Gidole;
+  font-size: rem(25);
   font-weight: 900;
 }

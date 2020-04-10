@@ -1,6 +1,5 @@
 .header {
   align-items: center;
-  border-bottom: 1px solid cc(text);
   display: flex;
   padding: rem(20) rem(45);
   justify-content: space-between;
@@ -8,7 +7,7 @@
   &__title {
     @extend %font-type-title;
     align-items: center;
-    color: cc(strava);
+    color: cc(dark);
     display: flex;
     text-decoration: none;
   }
