@@ -37,21 +37,21 @@ export default {
   },
   getActivity: async id => {
     const result = await axios.get(`https://www.strava.com/api/v3/activities/${id}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+      headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem('access_token')}` },
     });
 
     return result.data;
   },
   getEquipment: async id => {
     const result = await axios.get(`https://www.strava.com/api/v3/gear/${id}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+      headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem('access_token')}` },
     });
 
     return result.data;
   },
   getSegmentLeaderBoard: async id => {
     const result = await axios.get(`https://www.strava.com/api/v3/segments/${id}/leaderboard`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+      headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem('access_token')}` },
     });
 
     return result.data;

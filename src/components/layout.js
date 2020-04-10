@@ -19,20 +19,20 @@ const Layout = ({ children }) => {
     }
   `);
 
-  const expiresAtLocal = localStorage.getItem('expires_at');
+  const expiresAtLocal = typeof window !== 'undefined' ? localStorage.getItem('expires_at') : null;
 
   useEffect(() => {
-    const expiresAt = localStorage.getItem('expires_at');
-    const refreshToken = localStorage.getItem('refresh_token');
+    const expiresAt = typeof window !== 'undefined' ? localStorage.getItem('expires_at') : null;
+    const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refresh_token') : null;
     const currentTime = new Date().getTime() / 1000;
 
     if (currentTime > expiresAt) {
       stravaAgents
         .refreshToken(refreshToken)
         .then(({ expires_at, refresh_token, access_token }) => {
-          localStorage.setItem('expires_at', expires_at);
-          localStorage.setItem('refresh_token', refresh_token);
-          localStorage.setItem('access_token', access_token);
+          typeof window !== 'undefined' && localStorage.setItem('expires_at', expires_at);
+          typeof window !== 'undefined' && localStorage.setItem('refresh_token', refresh_token);
+          typeof window !== 'undefined' && localStorage.setItem('access_token', access_token);
         })
         .catch(() => {
           window.location.replace(process.env.GATSBY_AUTHORIZE_URL);

@@ -12,9 +12,9 @@ const Callback = ({ location }) => {
     stravaAgent
       .authenticate(code)
       .then(({ expires_at, refresh_token, access_token, athlete }) => {
-        localStorage.setItem('expires_at', expires_at);
-        localStorage.setItem('refresh_token', refresh_token);
-        localStorage.setItem('access_token', access_token);
+        typeof window !== 'undefined' && localStorage.setItem('expires_at', expires_at);
+        typeof window !== 'undefined' && localStorage.setItem('refresh_token', refresh_token);
+        typeof window !== 'undefined' && localStorage.setItem('access_token', access_token);
         navigate('/');
       })
       .catch(error => {
