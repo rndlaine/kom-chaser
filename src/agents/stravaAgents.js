@@ -49,4 +49,11 @@ export default {
 
     return result.data;
   },
+  getSegmentLeaderBoard: async id => {
+    const result = await axios.get(`https://www.strava.com/api/v3/segments/${id}/leaderboard`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+    });
+
+    return result.data;
+  },
 };

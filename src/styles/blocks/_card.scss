@@ -32,10 +32,6 @@
     width: rem(45);
   }
 
-  &__date {
-    margin-bottom: rem(20);
-  }
-
   &__stats {
     display: flex;
     align-items: center;
@@ -44,12 +40,40 @@
 
     &.--header {
       margin: 0;
-      align-items: center;
+      margin-bottom: rem(10);
+      align-items: flex-start;
     }
   }
 
   &__separator {
     color: cc(main);
     margin: rem(10) 0;
+  }
+
+  &__rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+
+    &.--green {
+      color: green;
+    }
+
+    &.--yellow {
+      color: rgb(218, 218, 0);
+    }
+
+    &.--orange {
+      color: orange;
+    }
+
+    &.--red {
+      color: red;
+    }
+  }
+
+  &__rating-label {
+    @extend %font-type-rating;
   }
 }

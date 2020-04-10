@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import cycling from '../../images/icons/cycling.svg';
 
 const EffortCard = ({ effort }) => {
   const date = moment(effort.start_date);
@@ -10,11 +9,37 @@ const EffortCard = ({ effort }) => {
     .seconds(effort.elapsed_time)
     .format('mm:ss');
 
+  const komTime = moment('2015-01-01')
+    .startOf('day')
+    .seconds(effort.leaderboard.entries[0].elapsed_time)
+    .format('mm:ss');
+
+  const timeToKom = moment('2015-01-01')
+    .startOf('day')
+    .seconds(effort.elapsed_time - effort.leaderboard.entries[0].elapsed_time)
+    .format('mm:ss');
+
+  const komScore = effort.leaderboard.entries[0].elapsed_time / effort.elapsed_time;
+  let komRating = 'D';
+  let color = 'red';
+  if (komScore > 0.7 && komScore < 0.8) {
+    komRating = 'C';
+    color = 'orange';
+  } else if (komScore > 0.8 && komScore < 0.9) {
+    komRating = 'B';
+    color = 'yellow';
+  } else if (komScore > 0.9 && komScore < 1) {
+    komRating = 'A';
+    color = 'green';
+  }
+
   return (
     <div className="card">
       <div className="card__stats --header">
-        <span className="card__date">{date.format('YYYY/MM/DD')}</span>
-        <img className="card__icon" src={cycling} />
+        <span>{date.format('YYYY/MM/DD')}</span>
+        <div className={`card__rating --${color}`}>
+          <span className="card__rating-label">{komRating}</span>
+        </div>
       </div>
 
       <span className="card__title">{effort.name}</span>
@@ -27,6 +52,14 @@ const EffortCard = ({ effort }) => {
       <div className="card__stats">
         <span>Time: {time}</span>
         <span>Avg. power: {effort.average_watts} watts</span>
+      </div>
+      <div className="card__stats">
+        <span>KOM Time: {komTime}</span>
+        <span>Time to KOM: {timeToKom}</span>
+      </div>
+      <div className="card__stats">
+        <span>KOM Score: {komScore}</span>
+        <span>KOM Rating: {komRating}</span>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const ActivityCard = ({ activity, gear }) => {
   return (
     <Link className="card" to={`/activity/${activity.id}`}>
       <div className="card__stats --header">
-        <span className="card__date">{date.format('YYYY/MM/DD')}</span>
+        <span>{date.format('YYYY/MM/DD')}</span>
         <img className="card__icon" src={activity.type === 'Run' ? running : cycling} />
       </div>
 
