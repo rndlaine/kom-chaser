@@ -1,5 +1,7 @@
 .label {
   &__header {
     @extend %font-type-header;
+    margin-left: rem(20);
+    margin-bottom: rem(10);
   }
 }

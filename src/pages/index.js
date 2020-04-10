@@ -8,10 +8,14 @@ import ActivityList from '../components/Activity/ActivityList';
 
 const IndexPage = () => {
   const [activities, setActivities] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [gearsById, setGearsById] = useState({});
 
   useEffect(() => {
-    stravaAgents.listActivities().then(act => setActivities(act));
+    stravaAgents.listActivities().then(act => {
+      setActivities(act);
+      setIsLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -26,7 +30,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <ActivityList activities={activities} gearsById={gearsById} />
+      <ActivityList isLoading={isLoading} activities={activities} gearsById={gearsById} />
     </Layout>
   );
 };
