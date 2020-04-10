@@ -6,5 +6,9 @@
 @import './tools/functions';
 @import './tools/media-queries';
 
+// fonts
+@import './fonts';
+@import './font-types';
+
 // blocks
-@import 'activity', 'app', 'header', 'logo', 'sidebar';
+@import './blocks/index';

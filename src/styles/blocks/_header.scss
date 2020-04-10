@@ -1,0 +1,15 @@
+.header {
+  align-items: center;
+  border-bottom: 1px solid cc(text);
+  display: flex;
+  margin-bottom: rem(20);
+  padding: rem(16);
+
+  &__title {
+    @extend %font-type-title;
+    align-items: center;
+    color: cc(strava);
+    display: flex;
+    text-decoration: none;
+  }
+}
