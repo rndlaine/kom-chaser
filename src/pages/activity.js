@@ -10,6 +10,7 @@ import EffortCard from '../components/Effort/EffortCard';
 import LoadingCard from '../components/Activity/LoadingCard';
 import ActivityContext from '../contexts/ActivityContext';
 import LeaderBoardContext from '../contexts/LeaderBoardContext';
+import EmptyCard from '../components/Activity/EmptyCard';
 
 const Activity = ({ location }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -67,7 +68,7 @@ const Activity = ({ location }) => {
           })}
 
         {isLoading && _.times(50, index => <LoadingCard key={index} />)}
-        {!isLoading && !activity.segment_efforts && <span>Nothing to show...</span>}
+        {!isLoading && _.isEmpty(activity.segment_efforts) && <EmptyCard text="Nothing to show..." />}
       </section>
     </Layout>
   );
