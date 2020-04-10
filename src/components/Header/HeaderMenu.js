@@ -6,9 +6,9 @@ const HeaderMenu = ({ profile }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogOffClick = () => {
-    localStorage.removeItem('expires_at');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('access_token');
+    typeof window !== 'undefined' && localStorage.removeItem('expires_at');
+    typeof window !== 'undefined' && localStorage.removeItem('refresh_token');
+    typeof window !== 'undefined' && localStorage.removeItem('access_token');
     window.location.replace('/');
   };
 
