@@ -34,7 +34,6 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     const currentTime = new Date().getTime() / 1000;
-    console.log('athlete: ', athlete);
     if (currentTime < expiresAtLocal && _.isEmpty(athlete) && storeHydrated) {
       stravaAgents.getProfile().then(athlete => setAthlete(athlete));
     }

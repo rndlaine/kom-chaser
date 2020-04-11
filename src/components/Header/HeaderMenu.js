@@ -6,10 +6,21 @@ const HeaderMenu = ({ profile }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogOffClick = () => {
-    typeof window !== 'undefined' && localStorage.removeItem('expires_at');
-    typeof window !== 'undefined' && localStorage.removeItem('refresh_token');
-    typeof window !== 'undefined' && localStorage.removeItem('access_token');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('expires_at');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('access_token');
+    }
+
     window.location.replace('/');
+  };
+
+  const handleWipeClick = () => {
+    localStorage.removeItem('leaderboardBySegmentId');
+    localStorage.removeItem('activitiesById');
+    localStorage.removeItem('athlete');
+    localStorage.removeItem('activitiesDetailsById');
+    localStorage.removeItem('gearsById');
   };
 
   return (
@@ -18,9 +29,14 @@ const HeaderMenu = ({ profile }) => {
         {profile ? <HeaderProfileButton profile={profile} /> : <div className="header__image" />}
 
         {isOpen && (
-          <button className="header__menu-open" onClick={handleLogOffClick}>
-            Log off
-          </button>
+          <div className="header__menu-open">
+            <button className="header__menu-button" onClick={handleWipeClick}>
+              Wipe local data
+            </button>
+            <button className="header__menu-button" onClick={handleLogOffClick}>
+              Log off
+            </button>
+          </div>
         )}
       </button>
     </>
