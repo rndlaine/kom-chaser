@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, komRating }) => {
   const formattedDate = moment(effort.start_date).format('YYYY/MM/DD');
+  // <Link className="card" to={`/segment/${effort.segment.id}`}>
 
   return (
     <div className="card">

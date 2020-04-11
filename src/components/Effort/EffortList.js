@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import EffortCard from './EffortCard';
 import LoadingCard from '../Activity/LoadingCard';
-import EmptyCard from '../Activity/LoadingCard';
+import EmptyCard from '../Activity/EmptyCard';
 import _ from 'lodash';
 import Select from 'react-select';
 
@@ -29,6 +29,8 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
     },
     'desc',
   );
+
+  console.log('activity.segment_efforts: ', activity.segment_efforts);
 
   return (
     <>

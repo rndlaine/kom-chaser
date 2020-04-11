@@ -20,10 +20,12 @@ const ActivityCard = ({ activity, gear }) => {
       <span className="card__title">{activity.name}</span>
       <hr className="card__separator" />
 
-      <div className="card__stats">
-        <span>{gear && gear.name}</span>
-        <span>Elevation: {activity.total_elevation_gain.toFixed(0)}m</span>
-      </div>
+      {activity.type === 'Ride' && (
+        <div className="card__stats">
+          <span>{gear && gear.name}</span>
+          <span>Avg. power: {activity.average_watts.toFixed(1)} watts</span>
+        </div>
+      )}
 
       <div className="card__stats">
         <span>Distance: {(activity.distance / 1000).toFixed(2)} km</span>
@@ -31,9 +33,11 @@ const ActivityCard = ({ activity, gear }) => {
       </div>
 
       <div className="card__stats">
-        <span>Avg. power: {activity.average_watts.toFixed(1)} watts</span>
+        <span>Elevation: {activity.total_elevation_gain.toFixed(0)}m</span>
         <span>Elapsed Time: {getFormattedDate(activity.elapsed_time)}</span>
       </div>
+
+      {activity.type !== 'Ride' && <div className="card__stats"></div>}
     </Link>
   );
 };

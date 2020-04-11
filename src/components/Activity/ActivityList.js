@@ -18,8 +18,7 @@ const options = [
 
 const ActivityList = ({ activities, isLoading }) => {
   const [sortBy, setSortBy] = useState();
-  const filteredActivities = activities.filter(activity => activity.type === 'Ride');
-  const sortedActivities = _.orderBy(filteredActivities, sortBy, 'desc');
+  const sortedActivities = _.orderBy(activities, sortBy, 'desc');
   const { gearsById } = useContext(GearContext);
 
   return (
