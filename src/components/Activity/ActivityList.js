@@ -20,8 +20,6 @@ const ActivityList = ({ activities, gearsById, isLoading }) => {
   const filteredActivities = activities.filter(activity => activity.type === 'Ride');
   const sortedActivities = _.orderBy(filteredActivities, sortBy, 'desc');
 
-  console.log('activities: ', activities);
-
   return (
     <>
       <section className="activity-list__header">

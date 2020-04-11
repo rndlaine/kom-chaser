@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
-const EffortCard = ({ effort, timeToKom, komTime, effortTime, komScore, komRatingColor, komRating }) => {
+const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, komRating }) => {
   const formattedDate = moment(effort.start_date).format('YYYY/MM/DD');
 
   return (
