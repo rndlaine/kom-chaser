@@ -30,8 +30,6 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
     'desc',
   );
 
-  console.log('activity.segment_efforts: ', activity.segment_efforts);
-
   return (
     <>
       <section className="activity-list__header">
