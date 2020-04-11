@@ -37,8 +37,20 @@
 
 %font-type-subheader {
   font-family: Gidole;
-  font-size: rem(25);
+  font-size: rem(18);
   font-weight: 900;
+
+  @include tablet {
+    font-family: Gidole;
+    font-size: rem(20);
+    font-weight: 900;
+  }
+
+  @include desktop {
+    font-family: Gidole;
+    font-size: rem(25);
+    font-weight: 900;
+  }
 }
 
 %font-type-label {

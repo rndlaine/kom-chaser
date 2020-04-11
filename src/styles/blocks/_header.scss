@@ -29,6 +29,12 @@
     }
   }
 
+  &__name {
+    @include phone {
+      display: none;
+    }
+  }
+
   &__image {
     height: rem(40);
     width: rem(40);

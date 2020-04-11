@@ -1,3 +1,7 @@
 .layout {
   padding: rem(50) rem(50);
+
+  @include phone {
+    padding: rem(25) rem(20);
+  }
 }

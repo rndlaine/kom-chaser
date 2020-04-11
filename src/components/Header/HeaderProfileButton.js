@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const HeaderProfileButton = ({ profile }) => (
   <>
-    <span>
+    <span className="header__name">
       {profile.firstname} {profile.lastname}
     </span>
     <img src={profile.profile} className="header__image" />
