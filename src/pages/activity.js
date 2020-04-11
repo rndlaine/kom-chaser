@@ -14,20 +14,20 @@ const Activity = ({ location }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useGetRouteId(location.pathname);
   const { leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
-  const { activitiesDetailsById, setActivityDetails } = useContext(ActivityContext);
+  const { storeHydrated, activitiesDetailsById, setActivityDetails } = useContext(ActivityContext);
 
   const activity = activitiesDetailsById[id] || {};
 
   useEffect(() => {
     setIsLoading(true);
 
-    if (!activitiesDetailsById[id]) {
+    if (!activitiesDetailsById[id] && storeHydrated) {
       stravaAgents.getActivity(id).then(async activity => {
         setActivityDetails(activity);
         setIsLoading(false);
       });
     }
-  }, []);
+  }, [storeHydrated]);
 
   useEffect(() => {
     if (!_.isEmpty(activity)) {

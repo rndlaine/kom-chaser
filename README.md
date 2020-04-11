@@ -1,5 +1,7 @@
-Yo! J'sais pas ce que tu fais ici, mais ce projet là est sul side pas mal.
+## Projet de Confinement - KOM Chaser
 
-C'est un WIP, y'a encore rien qui marche et je doute que ça va fonctionner un jour
+Code Source pour http://kom-chaser.herokuapp.com
+
+C'est un WIP et j'ai aucune idée si je vais le maintenir!
 
 ✌️

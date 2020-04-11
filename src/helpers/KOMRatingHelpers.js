@@ -16,13 +16,13 @@ export const getKOMRating = (effort, leaderboard) => {
 
   let komRating = 'D';
   let komRatingColor = 'red';
-  if (komScore > 0.7 && komScore < 0.8) {
+  if (komScore > 0.6 && komScore < 0.7) {
     komRating = 'C';
     komRatingColor = 'orange';
-  } else if (komScore > 0.8 && komScore < 0.9) {
+  } else if (komScore > 0.7 && komScore < 0.85) {
     komRating = 'B';
     komRatingColor = 'yellow';
-  } else if (komScore > 0.9 && komScore < 1) {
+  } else if (komScore > 0.85 && komScore < 1) {
     komRating = 'A';
     komRatingColor = 'green';
   }
