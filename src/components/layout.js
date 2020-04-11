@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import Header from './Header/header';
 import stravaAgents from '../agents/stravaAgents';
+import AthleteContext from '../contexts/AthleteContext';
 
 const Layout = ({ children }) => {
-  const [profile, setProfile] = useState({});
+  const { storeHydrated, athlete, setAthlete } = useContext(AthleteContext);
 
   const expiresAtLocal = typeof window !== 'undefined' ? localStorage.getItem('expires_at') : null;
 
@@ -32,14 +34,15 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     const currentTime = new Date().getTime() / 1000;
-    if (currentTime < expiresAtLocal) {
-      stravaAgents.getProfile().then(profile => setProfile(profile));
+    console.log('athlete: ', athlete);
+    if (currentTime < expiresAtLocal && _.isEmpty(athlete) && storeHydrated) {
+      stravaAgents.getProfile().then(athlete => setAthlete(athlete));
     }
-  }, [expiresAtLocal]);
+  }, [athlete, expiresAtLocal, storeHydrated, setAthlete]);
 
   return (
     <>
-      <Header profile={profile} />
+      <Header profile={athlete} />
 
       <main className="layout">{children}</main>
     </>

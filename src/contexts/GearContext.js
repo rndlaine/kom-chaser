@@ -28,7 +28,7 @@ class GearProvider extends React.Component {
 
   componentDidUpdate(_prevProps, prevState) {
     if (prevState.gearsById !== this.state.gearsById) {
-      setWithExpiry('gearsById', this.state.gearsById, 1000 * 60 * 60 * 7);
+      setWithExpiry('gearsById', this.state.gearsById, 1000 * 60 * 60 * 24 * 7);
     }
   }
 
