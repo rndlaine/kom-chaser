@@ -3,9 +3,12 @@ import './src/styles/index.scss';
 
 import { ActivityProvider } from './src/contexts/ActivityContext';
 import { LeaderBoardProvider } from './src/contexts/LeaderBoardContext';
+import { GearProvider } from './src/contexts/GearContext';
 
 export const wrapRootElement = ({ element }) => (
   <ActivityProvider>
-    <LeaderBoardProvider>{element}</LeaderBoardProvider>
+    <GearProvider>
+      <LeaderBoardProvider>{element}</LeaderBoardProvider>
+    </GearProvider>
   </ActivityProvider>
 );

@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import { setWithExpiry, getWithExpiry, getWithItemExpiry, setWithItemExpiry } from '../helpers/localStorageHelpers';
 
 const defaultState = {
   activitiesById: {},
@@ -19,10 +20,14 @@ class ActivityProvider extends React.Component {
 
   componentDidMount() {
     if (typeof window !== 'undefined') {
-      const activitiesDetailsById = localStorage.getItem('activitiesDetailsById');
-
+      const activitiesDetailsById = getWithItemExpiry('activitiesDetailsById');
       if (activitiesDetailsById) {
-        this.setState({ activitiesDetailsById: JSON.parse(activitiesDetailsById) });
+        this.setState({ activitiesDetailsById });
+      }
+
+      const activitiesById = getWithExpiry('activitiesById');
+      if (activitiesById) {
+        this.setState({ activitiesById });
       }
     }
 
@@ -31,7 +36,11 @@ class ActivityProvider extends React.Component {
 
   componentDidUpdate(_prevProps, prevState) {
     if (prevState.activitiesDetailsById !== this.state.activitiesDetailsById) {
-      localStorage.setItem('activitiesDetailsById', JSON.stringify(this.state.activitiesDetailsById));
+      setWithItemExpiry('activitiesDetailsById', this.state.activitiesDetailsById, 1000 * 60 * 60 * 24 * 30);
+    }
+
+    if (prevState.activitiesById !== this.state.activitiesById) {
+      setWithExpiry('activitiesById', this.state.activitiesById, 1000 * 60 * 60 * 2);
     }
   }
 

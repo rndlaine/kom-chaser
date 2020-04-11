@@ -13,37 +13,37 @@ import LeaderBoardContext from '../contexts/LeaderBoardContext';
 const Activity = ({ location }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useGetRouteId(location.pathname);
-  const { leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
-  const { storeHydrated, activitiesDetailsById, setActivityDetails } = useContext(ActivityContext);
+  const { storeHydrated: leaderboardStoreHydrated, leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
+  const { storeHydrated: activityStoreHydrated, activitiesDetailsById, setActivityDetails } = useContext(ActivityContext);
 
   const activity = activitiesDetailsById[id] || {};
 
   useEffect(() => {
     setIsLoading(true);
 
-    if (!activitiesDetailsById[id] && storeHydrated) {
+    if (!activitiesDetailsById[id] && activityStoreHydrated) {
       stravaAgents.getActivity(id).then(async activity => {
         setActivityDetails(activity);
         setIsLoading(false);
       });
     }
-  }, [storeHydrated]);
+  }, [activityStoreHydrated]);
 
   useEffect(() => {
-    if (!_.isEmpty(activity)) {
+    if (!_.isEmpty(activity) && leaderboardStoreHydrated) {
       setIsLoading(true);
 
       activity.segment_efforts.forEach(effort => {
         const segmentId = effort.segment.id;
 
-        if (!leaderboardBySegmentId[segmentId]) {
+        if (!leaderboardBySegmentId[segmentId] && leaderboardStoreHydrated) {
           stravaAgents.getSegmentLeaderBoard(segmentId).then(leaderboard => setLeaderboard(segmentId, { leaderboard, komAnalysis: getKOMRating(effort, leaderboard) }));
         }
       });
 
       setIsLoading(false);
     }
-  }, [activity]);
+  }, [activity, leaderboardStoreHydrated]);
 
   return (
     <Layout>

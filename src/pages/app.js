@@ -6,32 +6,37 @@ import SEO from '../components/seo';
 import stravaAgents from '../agents/stravaAgents';
 import ActivityList from '../components/Activity/ActivityList';
 import ActivityContext from '../contexts/ActivityContext';
+import GearContext from '../contexts/GearContext';
 
 const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [gearsById, setGearsById] = useState({});
-  const { activitiesById, setActivities } = useContext(ActivityContext);
+  const { storeHydrated: activityStoreHydrated, activitiesById, setActivities } = useContext(ActivityContext);
+  const { storeHydrated: gearStoreHydrated, gearsById, setGear } = useContext(GearContext);
 
   useEffect(() => {
-    if (_.isEmpty(activitiesById)) {
+    if (_.isEmpty(activitiesById) && activityStoreHydrated) {
       setIsLoading(true);
       stravaAgents.listActivities().then(act => {
         setActivities(act);
         setIsLoading(false);
       });
     }
-  }, []);
+  }, [activityStoreHydrated]);
 
   useEffect(() => {
     const activities = _.values(activitiesById);
 
-    if (activities.length > 0) {
+    if (activities.length > 0 && gearStoreHydrated) {
       const activitiesWithGear = activities.filter(activity => !!activity.gear_id);
       const uniqueByGearIds = _.uniqBy(activitiesWithGear, activity => activity.gear_id);
 
-      uniqueByGearIds.forEach(activity => stravaAgents.getEquipment(activity.gear_id).then(gear => setGearsById(gearsByIdFunc => ({ ...gearsByIdFunc, [gear.id]: gear }))));
+      uniqueByGearIds.forEach(activity => {
+        if (!gearsById[activity.gear_id]) {
+          stravaAgents.getEquipment(activity.gear_id).then(gear => setGear(gear));
+        }
+      });
     }
-  }, [activitiesById]);
+  }, [activitiesById, gearStoreHydrated]);
 
   const sortedActivities = _.orderBy(_.values(activitiesById), 'id', 'desc');
 

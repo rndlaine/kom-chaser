@@ -55,6 +55,7 @@ export default {
     return result.data;
   },
   getEquipment: async id => {
+    console.log('getEquipment: ');
     const result = await axios.get(`https://www.strava.com/api/v3/gear/${id}`, {
       headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem('access_token')}` },
       crossDomain: true,
@@ -63,6 +64,7 @@ export default {
     return result.data;
   },
   getSegmentLeaderBoard: async id => {
+    console.log('getSegmentLeaderBoard: ');
     const result = await axios.get(`https://www.strava.com/api/v3/segments/${id}/leaderboard`, {
       headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem('access_token')}` },
       crossDomain: true,
