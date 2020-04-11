@@ -5,13 +5,13 @@
 
   @include tablet {
     font-family: Gidole;
-    font-size: rem(40);
+    font-size: rem(50);
     font-weight: 900;
   }
 
   @include desktop {
     font-family: Gidole;
-    font-size: rem(60);
+    font-size: rem(80);
     font-weight: 900;
   }
 }

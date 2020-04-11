@@ -24,14 +24,15 @@
       flex: 1 0 rem(400);
       margin: rem(10);
       margin-top: rem(100);
-      padding: rem(100);
+      padding: rem(50);
       transition: all 0.2s ease;
     }
   }
 
   &__description {
     @extend %font-type-subheader;
-    margin-bottom: rem(50);
+    margin-bottom: rem(25);
+    line-height: 1.5;
   }
 
   &__separator {
@@ -42,6 +43,8 @@
 
   &__title {
     @extend %font-type-title;
+    text-decoration: underline cc(main);
+    margin-bottom: rem(25);
   }
 
   &__button {
