@@ -9,7 +9,6 @@ import LoadingCard from './LoadingCard';
 const options = [
   { value: '', label: 'Date' },
   { value: 'average_watts', label: 'Average Power' },
-  { value: 'average_watts', label: 'Average Power' },
   { value: 'average_speed', label: 'Average Speed' },
   { value: 'distance', label: 'Distance' },
   { value: 'elapsed_time', label: 'Elapsed Time' },
