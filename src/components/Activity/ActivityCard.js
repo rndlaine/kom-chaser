@@ -20,12 +20,13 @@ const ActivityCard = ({ activity, gear }) => {
       <span className="card__title">{activity.name}</span>
       <hr className="card__separator" />
 
-      {activity.type === 'Ride' && (
-        <div className="card__stats">
-          <span>{gear && gear.name}</span>
-          <span>Avg. power: {activity.average_watts.toFixed(1)} watts</span>
-        </div>
-      )}
+      {activity.type === 'Ride' ||
+        (activity.type === 'VirtualRide' && (
+          <div className="card__stats">
+            <span>{gear && gear.name}</span>
+            <span>Avg. power: {activity.average_watts.toFixed(1)} watts</span>
+          </div>
+        ))}
 
       <div className="card__stats">
         <span>Distance: {(activity.distance / 1000).toFixed(2)} km</span>
