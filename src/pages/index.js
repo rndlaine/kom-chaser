@@ -12,7 +12,7 @@ const IndexPage = () => {
       <section className="landing">
         <article className="landing__card">
           <span className="landing__title">KOM Chaser (Powered by Strava)</span>
-          <hr className="card__separator landing__separator" />
+          <hr className="landing__separator" />
           <p className="landing__description">
             This app is meant to help you chase your next (or first) Strava KOM. <br /> Go find your next target!
           </p>
