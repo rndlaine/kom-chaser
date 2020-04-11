@@ -12,7 +12,7 @@ export const getKOMRating = (effort, leaderboard) => {
   const effortTime = getFormattedDate(effort.elapsed_time);
   const komTime = getFormattedDate(komSeconds);
   const timeToKom = getFormattedDate(effort.elapsed_time - komSeconds);
-  const komScore = leaderboard.entries[0].elapsed_time / effort.elapsed_time;
+  const komScore = komSeconds / effort.elapsed_time;
 
   let komRating = 'D';
   let komRatingColor = 'red';
