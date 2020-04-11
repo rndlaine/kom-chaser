@@ -4,4 +4,10 @@
     margin-left: rem(20);
     margin-bottom: rem(10);
   }
+
+  &__subheader {
+    @extend %font-type-subheader;
+    margin-left: rem(20);
+    margin-bottom: rem(10);
+  }
 }

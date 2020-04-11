@@ -1,9 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
+
 import running from '../../images/icons/running.svg';
 import cycling from '../../images/icons/cycling.svg';
-import { Link } from 'gatsby';
+import { getFormattedDate } from '../../helpers/KOMRatingHelpers';
 
 const ActivityCard = ({ activity, gear }) => {
   const date = moment(activity.start_date);
@@ -26,6 +28,11 @@ const ActivityCard = ({ activity, gear }) => {
       <div className="card__stats">
         <span>Distance: {(activity.distance / 1000).toFixed(2)} km</span>
         <span>Avg. speed: {(activity.average_speed * 3.6).toFixed(1)}km/h</span>
+      </div>
+
+      <div className="card__stats">
+        <span>Avg. power: {activity.average_watts.toFixed(1)} watts</span>
+        <span>Elapsed Time: {getFormattedDate(activity.elapsed_time)}</span>
       </div>
     </Link>
   );

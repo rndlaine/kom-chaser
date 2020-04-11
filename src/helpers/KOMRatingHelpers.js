@@ -1,10 +1,10 @@
 import moment from 'moment';
 
-const getFormattedDate = seconds =>
+export const getFormattedDate = seconds =>
   moment('2015-01-01')
     .startOf('day')
     .seconds(seconds)
-    .format('mm:ss');
+    .format('H:mm:ss');
 
 export const getKOMRating = (effort, leaderboard) => {
   const komSeconds = leaderboard.entries[0].elapsed_time;
