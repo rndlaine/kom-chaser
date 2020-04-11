@@ -5,6 +5,7 @@
   justify-content: space-between;
   padding: 0 rem(45);
   background-color: cc(palest);
+  height: rem(60);
 
   &__title {
     @extend %font-type-subheader;
