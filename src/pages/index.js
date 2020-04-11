@@ -3,7 +3,6 @@ import { Link } from 'gatsby';
 
 import SEO from '../components/seo';
 import Header from '../components/Header/header';
-import '../styles/index.scss';
 
 const IndexPage = () => {
   return (

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from './Header/header';
-import '../styles/index.scss';
 import stravaAgents from '../agents/stravaAgents';
 
 const Layout = ({ children }) => {
