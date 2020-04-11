@@ -11,7 +11,7 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komScore, komRatin
         <span>{formattedDate}</span>
 
         <div className={`card__rating --${komRatingColor}`}>
-          <span className="card__rating-label">KOM Probability</span>
+          <span className="card__rating-label">KOM Probability Score</span>
           <span className="card__rating-value">{komRating}</span>
         </div>
       </div>
