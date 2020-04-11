@@ -30,10 +30,6 @@
     min-height: rem(70);
     display: flex;
     align-items: flex-end;
-
-    @include phone {
-      min-height: inherit;
-    }
   }
 
   &__icon {
