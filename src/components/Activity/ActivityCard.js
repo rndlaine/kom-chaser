@@ -17,7 +17,9 @@ const ActivityCard = ({ activity, gear }) => {
         <img className="card__icon" src={activity.type === 'Run' ? running : cycling} />
       </div>
 
-      <span className="card__title">{activity.name}</span>
+      <span className="card__title">
+        <span>{activity.name}</span>
+      </span>
       <hr className="card__separator" />
 
       {activity.average_watts && (
@@ -37,7 +39,7 @@ const ActivityCard = ({ activity, gear }) => {
         <span>Elapsed Time: {getFormattedDate(activity.elapsed_time)}</span>
       </div>
 
-      {activity.type !== 'Ride' && <div className="card__stats"></div>}
+      {!activity.average_watts && <div className="card__stats"></div>}
     </Link>
   );
 };

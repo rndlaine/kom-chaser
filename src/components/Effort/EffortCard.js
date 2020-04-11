@@ -17,7 +17,9 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, ko
         </div>
       </div>
 
-      <span className="card__title">{effort.name}</span>
+      <span className="card__title">
+        <span>{effort.name}</span>
+      </span>
       <hr className="card__separator" />
 
       <div className="card__stats">

@@ -21,8 +21,6 @@ const ActivityList = ({ activities, isLoading }) => {
   const sortedActivities = _.orderBy(activities, activity => activity[sortBy] || 0, 'desc');
   const { gearsById } = useContext(GearContext);
 
-  console.log('sortedActivities: ', sortedActivities);
-
   return (
     <>
       <section className="activity-list__header">
