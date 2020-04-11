@@ -9,8 +9,10 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komScore, komRatin
     <div className="card">
       <div className="card__stats --header">
         <span>{formattedDate}</span>
+
         <div className={`card__rating --${komRatingColor}`}>
-          <span className="card__rating-label">{komRating}</span>
+          <span className="card__rating-label">KOM Probability</span>
+          <span className="card__rating-value">{komRating}</span>
         </div>
       </div>
 

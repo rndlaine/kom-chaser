@@ -75,6 +75,11 @@
   }
 
   &__rating-label {
+    color: cc(text);
+    margin-right: rem(10);
+  }
+
+  &__rating-value {
     @extend %font-type-rating;
   }
 }
