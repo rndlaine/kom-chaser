@@ -33,7 +33,7 @@ const HeaderMenu = ({ profile }) => {
           My Activities
         </Link>
         <Link className="header__link" to="/segmentefforts">
-          My Viewed Segment Efforts
+          My Viewed Segments
         </Link>
       </div>
 
@@ -46,7 +46,7 @@ const HeaderMenu = ({ profile }) => {
               My Activities
             </Link>
             <Link className="header__menu-button --mobile" to="/segmentefforts">
-              My Viewed Segment Efforts
+              My Viewed Segments
             </Link>
             <button className="header__menu-button" onClick={handleWipeClick}>
               Wipe local data

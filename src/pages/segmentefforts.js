@@ -14,6 +14,10 @@ const SegmentEfforts = () => {
   const { segmentEffortsBySegmentId } = useContext(SegmentEffortContext);
 
   const segmentEfforts = _.flatten(_.values(segmentEffortsBySegmentId));
+  console.log(segmentEfforts);
+
+  const orderedSegmentEfforts = _.orderBy(segmentEfforts, 'elapsed_time');
+  const uniqueSegmentEfforts = _.uniqBy(orderedSegmentEfforts, 'segment.id');
 
   useEffect(() => {
     segmentEfforts.forEach(effort => {
@@ -30,7 +34,7 @@ const SegmentEfforts = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <SegmentEffortList title="My Viewed Segment Efforts" isLoading={isLoading} efforts={segmentEfforts} leaderboardBySegmentId={leaderboardBySegmentId} />
+      <SegmentEffortList title="My Viewed Segments" isLoading={isLoading} efforts={uniqueSegmentEfforts} leaderboardBySegmentId={leaderboardBySegmentId} />
     </Layout>
   );
 };
