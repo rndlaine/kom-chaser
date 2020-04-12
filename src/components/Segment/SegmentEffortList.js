@@ -40,7 +40,7 @@ const SegmentEffortList = ({ isSyncing, onSync, title, isLoading, efforts, leade
     <>
       {onSync && (
         <button className="button__action" onClick={onSync}>
-          Sync data (may take a couple of minutes) <img className={classNames('button__icon', isSyncing && '--syncing')} alt="" width={25} src={refresh} />
+          Sync Activities <img className={classNames('button__icon', isSyncing && '--syncing')} alt="" width={25} src={refresh} />
         </button>
       )}
 
