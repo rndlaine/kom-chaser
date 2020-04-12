@@ -62,6 +62,10 @@ const SegmentEfforts = () => {
   };
 
   const segmentEfforts = _.flatten(_.values(segmentEffortsBySegmentId));
+  console.log(segmentEfforts);
+
+  const orderedSegmentEfforts = _.orderBy(segmentEfforts, 'elapsed_time');
+  const uniqueSegmentEfforts = _.uniqBy(orderedSegmentEfforts, 'segment.id');
 
   useEffect(() => {
     segmentEfforts.forEach(effort => {
@@ -78,15 +82,7 @@ const SegmentEfforts = () => {
   return (
     <Layout>
       <SEO title="Home" />
-
-      <SegmentEffortList
-        isSyncing={isSyncing}
-        onSync={handleSync}
-        title="My Segment Efforts"
-        isLoading={isLoading}
-        efforts={segmentEfforts}
-        leaderboardBySegmentId={leaderboardBySegmentId}
-      />
+      <SegmentEffortList isSyncing={isSyncing} onSync={handleSync} title="My Viewed Segments" isLoading={isLoading} efforts={uniqueSegmentEfforts} leaderboardBySegmentId={leaderboardBySegmentId} />
     </Layout>
   );
 };
