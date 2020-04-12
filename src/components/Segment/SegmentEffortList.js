@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import EffortCard from './EffortCard';
+import EffortCard from '../Effort/EffortCard';
 import LoadingCard from '../Activity/LoadingCard';
 import EmptyCard from '../Activity/EmptyCard';
 import _ from 'lodash';
@@ -16,7 +16,7 @@ const options = [
   { value: 'total_elevation_gain', label: 'Elevation' },
 ];
 
-const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) => {
+const SegmentEffortList = ({ title, isLoading, efforts, leaderboardBySegmentId }) => {
   const [sortBy, setSortBy] = useState();
   const sortedEfforts = _.orderBy(
     efforts,
@@ -24,6 +24,7 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
       if (sortBy === 'komScore') {
         const leaderboard = leaderboardBySegmentId[effort.segment.id];
         const komAnalysis = getKOMRating(effort, leaderboard);
+
         return leaderboard ? komAnalysis[sortBy] : 0;
       } else {
         return effort[sortBy];
@@ -35,7 +36,7 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
   return (
     <>
       <section className="activity-list__header">
-        <h1 className="label__header">{activity.name || 'Activity'} - Segments</h1>
+        <h1 className="label__header">{title || `Segments Efforts: ${_.get(efforts, '[0].name', 'Activity')}`}</h1>
         <div className="activity-list__filter">
           <h1 className="label__subheader">Sort by</h1>
           <Select className="activity-list__select" options={options} onChange={select => setSortBy(select.value)} />
@@ -50,7 +51,7 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
 
               if (leaderboard) {
                 const komAnalysis = getKOMRating(effort, leaderboard);
-                return <EffortCard key={`${effort.id}-${effort.segment.id}`} effort={effort} {...komAnalysis} />;
+                return <EffortCard noClick key={`${effort.id}-${effort.segment.id}`} effort={effort} {...komAnalysis} />;
               }
 
               return <LoadingCard key={`${effort.id}-${effort.segment.id}`} />;
@@ -58,21 +59,21 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
           </>
         )}
         {isLoading && _.times(50, index => <LoadingCard key={index} />)}
-        {!isLoading && _.isEmpty(activity.segment_efforts) && <EmptyCard text="Nothing to show..." />}
+        {!isLoading && _.isEmpty(efforts) && <EmptyCard text="Nothing to show..." />}
       </section>
     </>
   );
 };
 
-EffortList.propTypes = {
+SegmentEffortList.propTypes = {
   efforts: PropTypes.array,
   leaderboardBySegmentId: PropTypes.object,
   activity: PropTypes.object,
   isLoading: PropTypes.bool,
 };
 
-EffortList.defaultProps = {
+SegmentEffortList.defaultProps = {
   efforts: [],
 };
 
-export default EffortList;
+export default SegmentEffortList;

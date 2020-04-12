@@ -10,6 +10,10 @@
   padding: rem(20);
   transition: all 0.2s ease;
 
+  &.--noClick {
+    cursor: default;
+  }
+
   @include phone {
     flex: 1 0 rem(300);
     max-width: inherit;

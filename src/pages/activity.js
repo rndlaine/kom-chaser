@@ -37,7 +37,7 @@ const Activity = ({ location }) => {
         const segmentId = effort.segment.id;
 
         if (!leaderboardBySegmentId[segmentId] && leaderboardStoreHydrated) {
-          stravaAgents.getSegmentLeaderBoard(segmentId).then(leaderboard => setLeaderboard(segmentId, { leaderboard, komAnalysis: getKOMRating(effort, leaderboard) }));
+          stravaAgents.getSegmentLeaderBoard(segmentId).then(leaderboard => setLeaderboard(segmentId, leaderboard));
         }
       });
 

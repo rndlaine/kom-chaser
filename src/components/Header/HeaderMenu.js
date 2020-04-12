@@ -17,11 +17,13 @@ const HeaderMenu = ({ profile }) => {
   };
 
   const handleWipeClick = () => {
-    localStorage.removeItem('leaderboardBySegmentId');
     localStorage.removeItem('activitiesById');
-    localStorage.removeItem('athlete');
     localStorage.removeItem('activitiesDetailsById');
+    localStorage.removeItem('athlete');
     localStorage.removeItem('gearsById');
+    localStorage.removeItem('leaderboardBySegmentId');
+    localStorage.removeItem('segmentEffortsBySegmentId');
+    localStorage.removeItem('segmentsById');
   };
 
   return (

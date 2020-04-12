@@ -31,9 +31,9 @@ const ActivityList = ({ activities, isLoading }) => {
         <div className="activity-list__filter">
           <div className="activity-list__switch" onClick={() => setShowVirtualRides(!showVirtualRides)}>
             <h1 className="label__subheader --cursor">Include Virtual Rides?</h1>
-            <label class="switch" onChange={() => setShowVirtualRides(!showVirtualRides)}>
-              <input checked={showVirtualRides} type="checkbox" />
-              <span class="slider round"></span>
+            <label className="switch">
+              <input checked={showVirtualRides} type="checkbox" onChange={() => setShowVirtualRides(!showVirtualRides)} />
+              <span className="slider round"></span>
             </label>
           </div>
 
