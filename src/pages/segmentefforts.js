@@ -10,6 +10,7 @@ import SegmentEffortList from '../components/Segment/SegmentEffortList';
 import ActivityContext from '../contexts/ActivityContext';
 
 const SegmentEfforts = () => {
+  const [isActivityDetailsSynced, setIsActivityDetailsSynced] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const { storeHydrated: leaderboardStoreHydrated, leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
@@ -20,8 +21,6 @@ const SegmentEfforts = () => {
     setIsSyncing(true);
     try {
       let activities = _.values(activitiesById);
-      let activityDetails = _.values(activitiesDetailsById);
-      let leaderboards = _.values(leaderboardBySegmentId);
 
       if (_.isEmpty(activitiesById)) {
         console.log('Fetching activity summary list ');
@@ -29,41 +28,51 @@ const SegmentEfforts = () => {
         setActivities(activities);
       }
 
+      const promises = [];
       for (var i = 0; i < activities.length; i++) {
         if (!activitiesDetailsById[activities[i].id]) {
-          console.log('Fetching activity ', activities[i].id);
-          setActivityDetails(await stravaAgents.getActivity(activities[i].id));
+          promises.push(stravaAgents.getActivity(activities[i].id));
         } else {
           console.log('Activity ', activities[i].id, ' already loaded');
         }
       }
 
-      // for (var j = 0; j < activityDetails.length; j++) {
-      //   const segmentEfforts = activityDetails[j].segment_efforts;
-
-      //   for (var k = 0; k < segmentEfforts.length; k++) {
-      //     const segmentId = segmentEfforts[k].segment.id;
-
-      //     if (!leaderboardBySegmentId[segmentId]) {
-      //       console.log('Fetching Leaderboard ', segmentId);
-      //       setLeaderboard(segmentId, await stravaAgents.getSegmentLeaderBoard(segmentId));
-      //     } else {
-      //       console.log('Leaderboard ', segmentId, ' already loaded ');
-      //     }
-      //   }
-      // }
+      Promise.all(promises)
+        .then(activityDetails => {
+          for (var i = 0; i < activityDetails.length; i++) {
+            console.log('Fetched activity ', activityDetails[i].id);
+            setActivityDetails(activityDetails[i]);
+          }
+        })
+        .finally(() => setIsActivityDetailsSynced(true));
     } catch (error) {
       console.error(error);
     }
 
-    console.log('Syncing done!');
-
     setIsSyncing(false);
   };
 
-  const segmentEfforts = _.flatten(_.values(segmentEffortsBySegmentId));
-  console.log(segmentEfforts);
+  useEffect(() => {
+    if (isActivityDetailsSynced) {
+      const activityDetails = _.values(activitiesDetailsById);
 
+      const flattenSegmentEfforts = _.flatMap(activityDetails, details => details.segment_efforts);
+      const uniqueSegmentEfforts = _.uniqBy(flattenSegmentEfforts, 'segment.id');
+
+      for (var i = 0; i < uniqueSegmentEfforts.length; i++) {
+        const segId = uniqueSegmentEfforts[i].segment.id;
+
+        if (!leaderboardBySegmentId[segId]) {
+          stravaAgents.getSegmentLeaderBoard(segId).then(leaderboard => {
+            console.log('Fetched leaderboard ', leaderboard.id);
+            setLeaderboard(leaderboard);
+          });
+        }
+      }
+    }
+  }, [isActivityDetailsSynced]);
+
+  const segmentEfforts = _.flatten(_.values(segmentEffortsBySegmentId));
   const orderedSegmentEfforts = _.orderBy(segmentEfforts, 'elapsed_time');
   const uniqueSegmentEfforts = _.uniqBy(orderedSegmentEfforts, 'segment.id');
 
@@ -82,7 +91,14 @@ const SegmentEfforts = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <SegmentEffortList isSyncing={isSyncing} onSync={handleSync} title="My Viewed Segments" isLoading={isLoading} efforts={uniqueSegmentEfforts} leaderboardBySegmentId={leaderboardBySegmentId} />
+      <SegmentEffortList
+        isSyncing={isSyncing}
+        onSync={handleSync}
+        title="My Viewed Segments"
+        isLoading={isLoading}
+        efforts={uniqueSegmentEfforts}
+        leaderboardBySegmentId={leaderboardBySegmentId}
+      />
     </Layout>
   );
 };
