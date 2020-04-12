@@ -12,6 +12,10 @@
     align-items: center;
     display: flex;
     text-decoration: underline cc(main);
+
+    @include desktop {
+      width: rem(300);
+    }
   }
 
   &__logo {
@@ -23,6 +27,12 @@
     align-items: center;
     padding: rem(10);
     position: relative;
+    cursor: pointer;
+
+    @include desktop {
+      width: rem(500);
+      justify-content: flex-end;
+    }
   }
 
   &__name {
@@ -49,6 +59,11 @@
     flex-direction: column;
     z-index: 2;
     box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.75);
+
+    @include phone {
+      width: rem(200);
+      left: rem(-75);
+    }
   }
 
   &__menu-button {
@@ -56,6 +71,26 @@
 
     &:hover {
       box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
+    }
+
+    &.--mobile {
+      @include desktop {
+        display: none;
+      }
+    }
+  }
+
+  &__link {
+    @extend %font-type-label;
+    padding: rem(20);
+  }
+
+  &__links {
+    display: none;
+
+    @include desktop {
+      display: inherit;
+      width: 100%;
     }
   }
 }

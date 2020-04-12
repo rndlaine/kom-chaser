@@ -47,10 +47,10 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
               const leaderboard = leaderboardBySegmentId[effort.segment.id];
 
               if (leaderboard) {
-                return <EffortCard key={effort.segment.id} effort={effort} {...leaderboard.komAnalysis} />;
+                return <EffortCard key={`${effort.id}-${effort.segment.id}`} effort={effort} {...leaderboard.komAnalysis} />;
               }
 
-              return <LoadingCard key={effort.segment.id} />;
+              return <LoadingCard key={`${effort.id}-${effort.segment.id}`} />;
             })}
           </>
         )}

@@ -11,7 +11,7 @@
   transition: all 0.2s ease;
 
   @include phone {
-    flex: 1 0 rem(200);
+    flex: 1 0 rem(300);
     max-width: inherit;
   }
 
@@ -30,6 +30,10 @@
     min-height: rem(70);
     display: flex;
     align-items: flex-end;
+
+    @include phone {
+      min-height: inherit;
+    }
   }
 
   &__icon {
@@ -45,7 +49,7 @@
 
     &.--header {
       margin: 0;
-      margin-bottom: rem(10);
+      margin-bottom: rem(30);
       align-items: flex-start;
     }
   }

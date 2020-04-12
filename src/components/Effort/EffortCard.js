@@ -1,13 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
 
 const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, komRating }) => {
   const formattedDate = moment(effort.start_date).format('YYYY/MM/DD');
-  // <Link className="card" to={`/segment/${effort.segment.id}`}>
 
   return (
-    <div className="card">
+    <Link className="card" to={`/segment/${effort.segment.id}`}>
       <div className="card__stats --header">
         <span>{formattedDate}</span>
 
@@ -34,7 +34,7 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, ko
         <span>KOM Time: {komTime}</span>
         <span>Time to KOM: {timeToKom}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

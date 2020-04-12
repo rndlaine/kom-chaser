@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import HeaderProfileButton from './HeaderProfileButton';
+import { Link } from 'gatsby';
 
 const HeaderMenu = ({ profile }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,11 +26,26 @@ const HeaderMenu = ({ profile }) => {
 
   return (
     <>
-      <button className="header__menu" onClick={() => setIsOpen(!isOpen)}>
+      <div className="header__links">
+        <Link className="header__link" to="/app">
+          My Activities
+        </Link>
+        <Link className="header__link" to="/segmentefforts">
+          My Segment Efforts
+        </Link>
+      </div>
+
+      <div className="header__menu" onClick={() => setIsOpen(!isOpen)}>
         {profile ? <HeaderProfileButton profile={profile} /> : <div className="header__image" />}
 
         {isOpen && (
           <div className="header__menu-open">
+            <Link className="header__menu-button --mobile" to="/app">
+              My Activities
+            </Link>
+            <Link className="header__menu-button --mobile" to="/segmentefforts">
+              My Segment Efforts
+            </Link>
             <button className="header__menu-button" onClick={handleWipeClick}>
               Wipe local data
             </button>
@@ -38,7 +54,7 @@ const HeaderMenu = ({ profile }) => {
             </button>
           </div>
         )}
-      </button>
+      </div>
     </>
   );
 };

@@ -18,7 +18,10 @@ const options = [
 
 const ActivityList = ({ activities, isLoading }) => {
   const [sortBy, setSortBy] = useState();
-  const sortedActivities = _.orderBy(activities, activity => activity[sortBy] || 0, 'desc');
+  const [showVirtualRides, setShowVirtualRides] = useState(false);
+
+  const filteredActivities = showVirtualRides ? activities : activities.filter(activity => activity.type !== 'VirtualRide');
+  const sortedActivities = _.orderBy(filteredActivities, activity => activity[sortBy] || 0, 'desc');
   const { gearsById } = useContext(GearContext);
 
   return (
@@ -26,6 +29,14 @@ const ActivityList = ({ activities, isLoading }) => {
       <section className="activity-list__header">
         <h1 className="label__header">My Activities</h1>
         <div className="activity-list__filter">
+          <div className="activity-list__switch" onClick={() => setShowVirtualRides(!showVirtualRides)}>
+            <h1 className="label__subheader --cursor">Include Virtual Rides?</h1>
+            <label class="switch" onChange={() => setShowVirtualRides(!showVirtualRides)}>
+              <input checked={showVirtualRides} type="checkbox" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
           <h1 className="label__subheader">Sort by</h1>
           <Select className="activity-list__select" options={options} onChange={select => setSortBy(select.value)} />
         </div>

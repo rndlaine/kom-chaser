@@ -29,4 +29,10 @@
     margin-bottom: rem(10);
     margin-left: rem(10);
   }
+
+  &__switch {
+    align-items: flex-start;
+    cursor: pointer;
+    display: flex;
+  }
 }

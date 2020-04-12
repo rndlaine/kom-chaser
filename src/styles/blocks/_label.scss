@@ -9,5 +9,10 @@
     @extend %font-type-subheader;
     margin-left: rem(20);
     margin-bottom: rem(10);
+
+    &.--cursor {
+      cursor: pointer;
+      margin-right: rem(10);
+    }
   }
 }

@@ -70,4 +70,20 @@ export default {
 
     return result.data;
   },
+  getSegmentEfforts: async id => {
+    const result = await axios.get(`https://www.strava.com/api/v3/segments/${id}/all_efforts`, {
+      headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem('access_token')}` },
+      crossDomain: true,
+    });
+
+    return result.data;
+  },
+  getSegment: async id => {
+    const result = await axios.get(`https://www.strava.com/api/v3/segments/${id}`, {
+      headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem('access_token')}` },
+      crossDomain: true,
+    });
+
+    return result.data;
+  },
 };
