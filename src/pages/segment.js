@@ -17,7 +17,7 @@ const Segment = ({ location }) => {
   const { storeHydrated: segmentEffortStoreHydrated, segmentEffortsBySegmentId, setSegmentEffortsBySegmentId } = useContext(SegmentEffortContext);
   const { storeHydrated: segmentStoreHydrated, segmentsById, setSegment } = useContext(SegmentContext);
 
-  const segmentEfforts = segmentEffortsBySegmentId[id] || [];
+  const segmentEfforts = _.get(segmentEffortsBySegmentId, id, []);
 
   useEffect(() => {
     if (!segmentsById[id] && segmentStoreHydrated) {
