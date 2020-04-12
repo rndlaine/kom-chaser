@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 import EffortCard from '../Effort/EffortCard';
 import LoadingCard from '../Activity/LoadingCard';
+import refresh from '../../images/icons/refresh.svg';
 import EmptyCard from '../Activity/EmptyCard';
 import _ from 'lodash';
 import Select from 'react-select';
@@ -16,7 +19,7 @@ const options = [
   { value: 'total_elevation_gain', label: 'Elevation' },
 ];
 
-const SegmentEffortList = ({ title, isLoading, efforts, leaderboardBySegmentId }) => {
+const SegmentEffortList = ({ isSyncing, onSync, title, isLoading, efforts, leaderboardBySegmentId }) => {
   const [sortBy, setSortBy] = useState();
   const sortedEfforts = _.orderBy(
     efforts,
@@ -35,8 +38,15 @@ const SegmentEffortList = ({ title, isLoading, efforts, leaderboardBySegmentId }
 
   return (
     <>
+      {onSync && (
+        <button className="button__action" onClick={onSync}>
+          Sync data (may take a couple of minutes) <img className={classNames('button__icon', isSyncing && '--syncing')} alt="" width={25} src={refresh} />
+        </button>
+      )}
+
       <section className="activity-list__header">
         <h1 className="label__header">{title || `Segments Efforts: ${_.get(efforts, '[0].name', 'Activity')}`}</h1>
+
         <div className="activity-list__filter">
           <h1 className="label__subheader">Sort by</h1>
           <Select className="activity-list__select" options={options} onChange={select => setSortBy(select.value)} />

@@ -33,7 +33,7 @@ class LeaderBoardProvider extends React.Component {
   }
 
   setLeaderboard = (segmentId, leaderboard) => {
-    this.setState({ ...this.state, leaderboardBySegmentId: { ...this.state.leaderboardBySegmentId, [segmentId]: leaderboard } });
+    this.setState({ ...this.state, leaderboardBySegmentId: { ...this.state.leaderboardBySegmentId, [segmentId]: { entries: leaderboard.entries } } });
   };
 
   render() {

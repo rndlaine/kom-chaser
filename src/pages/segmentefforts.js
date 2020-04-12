@@ -7,11 +7,59 @@ import LeaderBoardContext from '../contexts/LeaderBoardContext';
 import stravaAgents from '../agents/stravaAgents';
 import SegmentEffortContext from '../contexts/SegmentEffortContext';
 import SegmentEffortList from '../components/Segment/SegmentEffortList';
+import ActivityContext from '../contexts/ActivityContext';
 
 const SegmentEfforts = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   const { storeHydrated: leaderboardStoreHydrated, leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
-  const { segmentEffortsBySegmentId } = useContext(SegmentEffortContext);
+  const { activitiesById, activitiesDetailsById, setActivities, setActivityDetails } = useContext(ActivityContext);
+  const { segmentEffortsBySegmentId, setSegmentEffort } = useContext(SegmentEffortContext);
+
+  const handleSync = async () => {
+    setIsSyncing(true);
+    try {
+      let activities = _.values(activitiesById);
+      let activityDetails = _.values(activitiesDetailsById);
+      let leaderboards = _.values(leaderboardBySegmentId);
+
+      if (_.isEmpty(activitiesById)) {
+        console.log('Fetching activity summary list ');
+        activities = await stravaAgents.listActivities();
+        setActivities(activities);
+      }
+
+      for (var i = 0; i < activities.length; i++) {
+        if (!activitiesDetailsById[activities[i].id]) {
+          console.log('Fetching activity ', activities[i].id);
+          setActivityDetails(await stravaAgents.getActivity(activities[i].id));
+        } else {
+          console.log('Activity ', activities[i].id, ' already loaded');
+        }
+      }
+
+      // for (var j = 0; j < activityDetails.length; j++) {
+      //   const segmentEfforts = activityDetails[j].segment_efforts;
+
+      //   for (var k = 0; k < segmentEfforts.length; k++) {
+      //     const segmentId = segmentEfforts[k].segment.id;
+
+      //     if (!leaderboardBySegmentId[segmentId]) {
+      //       console.log('Fetching Leaderboard ', segmentId);
+      //       setLeaderboard(segmentId, await stravaAgents.getSegmentLeaderBoard(segmentId));
+      //     } else {
+      //       console.log('Leaderboard ', segmentId, ' already loaded ');
+      //     }
+      //   }
+      // }
+    } catch (error) {
+      console.error(error);
+    }
+
+    console.log('Syncing done!');
+
+    setIsSyncing(false);
+  };
 
   const segmentEfforts = _.flatten(_.values(segmentEffortsBySegmentId));
 
@@ -30,8 +78,15 @@ const SegmentEfforts = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <button>SYNC DATA</button>
-      <SegmentEffortList title="My Segment Efforts" isLoading={isLoading} efforts={segmentEfforts} leaderboardBySegmentId={leaderboardBySegmentId} />
+
+      <SegmentEffortList
+        isSyncing={isSyncing}
+        onSync={handleSync}
+        title="My Segment Efforts"
+        isLoading={isLoading}
+        efforts={segmentEfforts}
+        leaderboardBySegmentId={leaderboardBySegmentId}
+      />
     </Layout>
   );
 };
