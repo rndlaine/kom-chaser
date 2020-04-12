@@ -30,6 +30,7 @@ const SegmentEfforts = () => {
   return (
     <Layout>
       <SEO title="Home" />
+      <button>SYNC DATA</button>
       <SegmentEffortList title="My Segment Efforts" isLoading={isLoading} efforts={segmentEfforts} leaderboardBySegmentId={leaderboardBySegmentId} />
     </Layout>
   );
