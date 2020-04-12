@@ -16,7 +16,6 @@ const SegmentEfforts = () => {
   const segmentEfforts = _.flatten(_.values(segmentEffortsBySegmentId));
 
   useEffect(() => {
-    console.log('segmentEfforts: ', segmentEfforts);
     segmentEfforts.forEach(effort => {
       if (!leaderboardBySegmentId[effort.segment.id] && leaderboardStoreHydrated) {
         setIsLoading(true);
