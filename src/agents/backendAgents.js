@@ -44,9 +44,4 @@ export default {
 
     return result.data;
   },
-  getSegmentLeaderBoard: async segmentId => {
-    const result = await axios.get(`${baseUrl}/segment/${segmentId}/leaderboard`);
-
-    return result.data;
-  },
 };

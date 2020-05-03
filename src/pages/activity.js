@@ -10,7 +10,6 @@ import backendAgents from '../agents/backendAgents';
 const Activity = ({ location }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [activity, setActivity] = useState({});
-  const [leaderboardBySegmentId, setLeaderboard] = useState({});
   const [efforts, setEfforts] = useState([]);
 
   const { id } = useGetRouteId(location.pathname);
@@ -28,24 +27,10 @@ const Activity = ({ location }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (!_.isEmpty(efforts)) {
-      setIsLoading(true);
-
-      efforts.forEach(effort => {
-        backendAgents.getSegmentLeaderBoard(effort.segmentid).then(leaderboard => {
-          setLeaderboard(state => ({ ...state, [effort.segmentid]: leaderboard }));
-        });
-      });
-
-      setIsLoading(false);
-    }
-  }, [efforts, activity]);
-
   return (
     <Layout>
       <SEO title="Home" />
-      <EffortList isLoading={isLoading} activity={activity} leaderboardBySegmentId={leaderboardBySegmentId} efforts={efforts} />
+      <EffortList isLoading={isLoading} activity={activity} efforts={efforts} />
     </Layout>
   );
 };

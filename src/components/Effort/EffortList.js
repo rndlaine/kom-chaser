@@ -5,7 +5,6 @@ import LoadingCard from '../Activity/LoadingCard';
 import EmptyCard from '../Activity/EmptyCard';
 import _ from 'lodash';
 import Select from 'react-select';
-import { getKOMRating } from '../../helpers/KOMRatingHelpers';
 
 const options = [
   { value: '', label: 'Date' },
@@ -16,21 +15,9 @@ const options = [
   { value: 'total_elevation_gain', label: 'Elevation' },
 ];
 
-const EffortList = ({ isLoading, activity, efforts, segment, leaderboardBySegmentId }) => {
+const EffortList = ({ isLoading, activity, efforts, segment }) => {
   const [sortBy, setSortBy] = useState();
-  const sortedEfforts = _.orderBy(
-    efforts,
-    effort => {
-      if (sortBy === 'komScore') {
-        const leaderboard = leaderboardBySegmentId[effort.segmentid];
-        const komAnalysis = getKOMRating(effort, leaderboard);
-        return leaderboard ? komAnalysis[sortBy] : 0;
-      } else {
-        return effort[sortBy];
-      }
-    },
-    'desc',
-  );
+  const sortedEfforts = _.orderBy(efforts, effort => effort[sortBy], 'desc');
 
   return (
     <>
@@ -43,20 +30,7 @@ const EffortList = ({ isLoading, activity, efforts, segment, leaderboardBySegmen
       </section>
 
       <section className="activity-list">
-        {!isLoading && (
-          <>
-            {sortedEfforts.map(effort => {
-              const leaderboard = leaderboardBySegmentId[effort.segmentid];
-
-              if (leaderboard) {
-                const komAnalysis = getKOMRating(effort, leaderboard);
-                return <EffortCard key={`${effort.id}-${effort.segmentid}`} effort={effort} {...komAnalysis} />;
-              }
-
-              return <LoadingCard key={`${effort.id}-${effort.segmentid}`} />;
-            })}
-          </>
-        )}
+        {!isLoading && sortedEfforts.map(effort => <EffortCard key={`${effort.id}-${effort.segmentid}`} effort={effort} />)}
         {isLoading && _.times(50, index => <LoadingCard key={index} />)}
         {!isLoading && _.isEmpty(efforts) && <EmptyCard text="Nothing to show..." />}
       </section>
@@ -66,7 +40,6 @@ const EffortList = ({ isLoading, activity, efforts, segment, leaderboardBySegmen
 
 EffortList.propTypes = {
   efforts: PropTypes.array,
-  leaderboardBySegmentId: PropTypes.object,
   activity: PropTypes.object,
   isLoading: PropTypes.bool,
 };
