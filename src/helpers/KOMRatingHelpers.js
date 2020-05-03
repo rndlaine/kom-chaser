@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 export const getFormattedDate = seconds =>
   moment('2015-01-01')
@@ -7,7 +8,8 @@ export const getFormattedDate = seconds =>
     .format('H:mm:ss');
 
 export const getKOMRating = (effort, leaderboard) => {
-  const komSeconds = leaderboard[0] ? leaderboard[0].elapsed_time : 0;
+  const sortedLeaderBoard = _.sortBy(leaderboard, item => item.rank);
+  const komSeconds = sortedLeaderBoard[0] ? sortedLeaderBoard[0].elapsed_time : 0;
 
   const effortTime = getFormattedDate(effort.elapsed_time);
   const komTime = getFormattedDate(komSeconds);

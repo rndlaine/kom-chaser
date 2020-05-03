@@ -39,6 +39,11 @@ export default {
 
     return result.data;
   },
+  getBestSegmentEffortsByUser: async userId => {
+    const result = await axios.get(`${baseUrl}/athlete/${userId}/bestsegmentefforts`);
+
+    return result.data;
+  },
   getSegmentLeaderBoard: async segmentId => {
     const result = await axios.get(`${baseUrl}/segment/${segmentId}/leaderboard`);
 
