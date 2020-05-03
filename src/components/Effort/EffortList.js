@@ -16,13 +16,13 @@ const options = [
   { value: 'total_elevation_gain', label: 'Elevation' },
 ];
 
-const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) => {
+const EffortList = ({ isLoading, activity, efforts, segment, leaderboardBySegmentId }) => {
   const [sortBy, setSortBy] = useState();
   const sortedEfforts = _.orderBy(
     efforts,
     effort => {
       if (sortBy === 'komScore') {
-        const leaderboard = leaderboardBySegmentId[effort.segment.id];
+        const leaderboard = leaderboardBySegmentId[effort.segmentid];
         const komAnalysis = getKOMRating(effort, leaderboard);
         return leaderboard ? komAnalysis[sortBy] : 0;
       } else {
@@ -46,19 +46,19 @@ const EffortList = ({ isLoading, activity, efforts, leaderboardBySegmentId }) =>
         {!isLoading && (
           <>
             {sortedEfforts.map(effort => {
-              const leaderboard = leaderboardBySegmentId[effort.segment.id];
+              const leaderboard = leaderboardBySegmentId[effort.segmentid];
 
               if (leaderboard) {
                 const komAnalysis = getKOMRating(effort, leaderboard);
-                return <EffortCard key={`${effort.id}-${effort.segment.id}`} effort={effort} {...komAnalysis} />;
+                return <EffortCard key={`${effort.id}-${effort.segmentid}`} effort={effort} {...komAnalysis} />;
               }
 
-              return <LoadingCard key={`${effort.id}-${effort.segment.id}`} />;
+              return <LoadingCard key={`${effort.id}-${effort.segmentid}`} />;
             })}
           </>
         )}
         {isLoading && _.times(50, index => <LoadingCard key={index} />)}
-        {!isLoading && _.isEmpty(activity.segment_efforts) && <EmptyCard text="Nothing to show..." />}
+        {!isLoading && _.isEmpty(efforts) && <EmptyCard text="Nothing to show..." />}
       </section>
     </>
   );

@@ -8,7 +8,7 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, ko
   const formattedDate = moment(effort.start_date).format('YYYY/MM/DD');
 
   return (
-    <Link className={classNames('card', noClick && '--noClick')} to={`/segment/${effort.segment.id}`}>
+    <Link className={classNames('card', noClick && '--noClick')} to={`/segment/${effort.segmentid}`}>
       <div className="card__stats --header">
         <span>{formattedDate}</span>
 
@@ -25,7 +25,7 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, ko
 
       <div className="card__stats">
         <span>Distance: {(effort.distance / 1000).toFixed(2)} km</span>
-        <span>City: {effort.segment.city}</span>
+        {/* <span>City: {effort.segment.city}</span> */}
       </div>
       <div className="card__stats">
         <span>Time: {effortTime}</span>
