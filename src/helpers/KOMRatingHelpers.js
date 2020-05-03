@@ -5,27 +5,3 @@ export const getFormattedDate = seconds =>
     .startOf('day')
     .seconds(seconds)
     .format('H:mm:ss');
-
-export const getKOMRating = (effort, leaderboard) => {
-  const komSeconds = leaderboard.entries[0].elapsed_time;
-
-  const effortTime = getFormattedDate(effort.elapsed_time);
-  const komTime = getFormattedDate(komSeconds);
-  const timeToKom = getFormattedDate(effort.elapsed_time - komSeconds);
-  const komScore = komSeconds / effort.elapsed_time;
-
-  let komRating = 'D';
-  let komRatingColor = 'red';
-  if (komScore > 0.6 && komScore < 0.7) {
-    komRating = 'C';
-    komRatingColor = 'orange';
-  } else if (komScore > 0.7 && komScore < 0.85) {
-    komRating = 'B';
-    komRatingColor = 'yellow';
-  } else if (komScore > 0.85 && komScore < 1) {
-    komRating = 'A';
-    komRatingColor = 'green';
-  }
-
-  return { timeToKom, komTime, effortTime, komScore, komRatingColor, komRating };
-};

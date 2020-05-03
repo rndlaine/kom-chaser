@@ -1,63 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import useGetRouteId from '../hooks/useGetRouteId';
-import LeaderBoardContext from '../contexts/LeaderBoardContext';
-import stravaAgents from '../agents/stravaAgents';
-import SegmentEffortContext from '../contexts/SegmentEffortContext';
-import SegmentContext from '../contexts/SegmentContext';
 import SegmentEffortList from '../components/Segment/SegmentEffortList';
+import backendAgents from '../agents/backendAgents';
 
 const Segment = ({ location }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [segmentEfforts, setSegmentEfforts] = useState([]);
+  const [segment, setSegment] = useState({});
   const { id } = useGetRouteId(location.pathname);
 
-  const { storeHydrated: leaderboardStoreHydrated, leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
-  const { storeHydrated: segmentEffortStoreHydrated, segmentEffortsBySegmentId, setSegmentEffortsBySegmentId } = useContext(SegmentEffortContext);
-  const { storeHydrated: segmentStoreHydrated, segmentsById, setSegment } = useContext(SegmentContext);
-
-  const segmentEfforts = _.get(segmentEffortsBySegmentId, id, []);
-
   useEffect(() => {
-    if (!segmentsById[id] && segmentStoreHydrated) {
-      setIsLoading(true);
-      stravaAgents.getSegment(id).then(segment => {
-        setSegment(segment);
-        setIsLoading(false);
-      });
-    }
+    setIsLoading(true);
 
-    if (!segmentEffortsBySegmentId[id] && segmentStoreHydrated) {
-      setIsLoading(true);
-      stravaAgents.getSegmentEfforts(id).then(efforts => {
-        setSegmentEffortsBySegmentId(id, efforts);
-        setIsLoading(false);
-      });
-    }
+    backendAgents.getSegment(id).then(item => setSegment(item));
 
-    if (!segmentsById[id] && segmentStoreHydrated) {
-      setIsLoading(true);
-      stravaAgents.getSegment(id).then(segment => {
-        setSegment(segment);
-        setIsLoading(false);
-      });
-    }
-
-    if (!leaderboardBySegmentId[id] && leaderboardStoreHydrated) {
-      setIsLoading(true);
-      stravaAgents.getSegmentLeaderBoard(id).then(leaderboard => {
-        setLeaderboard(leaderboard);
-        setIsLoading(false);
-      });
-    }
-  }, [segmentStoreHydrated, segmentEffortStoreHydrated, leaderboardStoreHydrated]);
+    backendAgents.getSegmentEffortsBySegment(id).then(efforts => {
+      setSegmentEfforts(efforts);
+      setIsLoading(false);
+    });
+  }, []);
 
   return (
     <Layout>
-      <SEO title="Home" />
-      <SegmentEffortList isLoading={isLoading} efforts={segmentEfforts} leaderboardBySegmentId={leaderboardBySegmentId} />
+      <SEO title="Segment" />
+      <SegmentEffortList isLoading={isLoading} segment={segment} efforts={segmentEfforts} />
     </Layout>
   );
 };

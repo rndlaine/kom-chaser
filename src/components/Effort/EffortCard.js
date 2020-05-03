@@ -1,20 +1,28 @@
 import React from 'react';
 import moment from 'moment';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 
-const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, komRating, noClick }) => {
+const EffortCard = ({ effort, noClick }) => {
   const formattedDate = moment(effort.start_date).format('YYYY/MM/DD');
 
-  return (
-    <Link className={classNames('card', noClick && '--noClick')} to={`/segment/${effort.segment.id}`}>
+  const cardWrapper = children =>
+    noClick ? (
+      <div className="card --noClick">{children}</div>
+    ) : (
+      <Link className="card" to={`/segment/${effort.segmentid}`}>
+        {children}
+      </Link>
+    );
+
+  return cardWrapper(
+    <>
       <div className="card__stats --header">
         <span>{formattedDate}</span>
 
-        <div className={`card__rating --${komRatingColor}`}>
+        <div className={`card__rating --${effort.komRatingColor}`}>
           <span className="card__rating-label">KOM Reachability Score</span>
-          <span className="card__rating-value">{komRating}</span>
+          <span className="card__rating-value">{effort.komRating}</span>
         </div>
       </div>
 
@@ -25,28 +33,32 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, ko
 
       <div className="card__stats">
         <span>Distance: {(effort.distance / 1000).toFixed(2)} km</span>
-        <span>City: {effort.segment.city}</span>
+        <span>{effort.city && `City: ${effort.city}`}</span>
       </div>
       <div className="card__stats">
-        <span>Time: {effortTime}</span>
+        <span>Time: {effort.effortTime}</span>
         <span>Avg. power: {effort.average_watts} watts</span>
       </div>
       <div className="card__stats">
-        <span>KOM Time: {komTime}</span>
-        <span>Time to KOM: {timeToKom}</span>
+        <span>KOM Time: {effort.komTime}</span>
+        <span>Time to KOM: {effort.timeToKom}</span>
       </div>
-    </Link>
+    </>,
   );
 };
 
 EffortCard.propTypes = {
   activity: PropTypes.object,
   gear: PropTypes.object,
-  timeToKom: PropTypes.string,
-  komTime: PropTypes.string,
-  effortTime: PropTypes.string,
-  komScore: PropTypes.number,
-  komRatingColor: PropTypes.string,
+  effort: PropTypes.object,
+  segment: PropTypes.object,
+};
+
+EffortCard.defaultProps = {
+  activity: {},
+  gear: {},
+  effort: {},
+  segment: {},
 };
 
 export default EffortCard;
