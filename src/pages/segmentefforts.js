@@ -14,7 +14,6 @@ const SegmentEfforts = () => {
   const { segmentEffortsBySegmentId } = useContext(SegmentEffortContext);
 
   const segmentEfforts = _.flatten(_.values(segmentEffortsBySegmentId));
-  console.log(segmentEfforts);
 
   const orderedSegmentEfforts = _.orderBy(segmentEfforts, 'elapsed_time');
   const uniqueSegmentEfforts = _.uniqBy(orderedSegmentEfforts, 'segment.id');

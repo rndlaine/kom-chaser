@@ -20,12 +20,11 @@ const Activity = ({ location }) => {
   useEffect(() => {
     setIsLoading(true);
     backendAgents.getActivity(id).then(activity => {
-      setActivity(_.get(activity, 0));
+      setActivity(activity, 0);
       setIsLoading(false);
     });
 
     backendAgents.getSegmentEffortsByActivity(id).then(efforts => {
-      console.log('efforts: ', efforts);
       setEfforts(efforts);
       setIsLoading(false);
     });

@@ -9,6 +9,11 @@ export default {
 
     return result.data;
   },
+  getGear: async id => {
+    const result = await axios.get(`${baseUrl}/gear/${id}`);
+
+    return result.data;
+  },
   getActivity: async id => {
     const result = await axios.get(`${baseUrl}/activity/${id}`);
 

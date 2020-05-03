@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
 import ActivityCard from './ActivityCard';
 import LoadingCard from './LoadingCard';
-import GearContext from '../../contexts/GearContext';
 
 const options = [
   { value: '', label: 'Date' },
@@ -16,13 +15,12 @@ const options = [
   { value: 'total_elevation_gain', label: 'Elevation' },
 ];
 
-const ActivityList = ({ activities, isLoading }) => {
+const ActivityList = ({ gearsById, activities, isLoading }) => {
   const [sortBy, setSortBy] = useState();
   const [showVirtualRides, setShowVirtualRides] = useState(false);
 
   const filteredActivities = showVirtualRides ? activities : activities.filter(activity => activity.type !== 'VirtualRide');
   const sortedActivities = _.orderBy(filteredActivities, activity => activity[sortBy] || 0, 'desc');
-  const { gearsById } = useContext(GearContext);
 
   return (
     <>
