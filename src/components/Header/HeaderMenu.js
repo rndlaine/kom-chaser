@@ -16,24 +16,11 @@ const HeaderMenu = ({ profile }) => {
     window.location.replace('/');
   };
 
-  const handleWipeClick = () => {
-    localStorage.removeItem('activitiesById');
-    localStorage.removeItem('activitiesDetailsById');
-    localStorage.removeItem('athlete');
-    localStorage.removeItem('gearsById');
-    localStorage.removeItem('leaderboardBySegmentId');
-    localStorage.removeItem('segmentEffortsBySegmentId');
-    localStorage.removeItem('segmentsById');
-  };
-
   return (
     <>
       <div className="header__links">
         <Link className="header__link" to="/app">
           My Activities
-        </Link>
-        <Link className="header__link" to="/segmentefforts">
-          My Viewed Segments
         </Link>
       </div>
 
@@ -45,12 +32,6 @@ const HeaderMenu = ({ profile }) => {
             <Link className="header__menu-button --mobile" to="/app">
               My Activities
             </Link>
-            <Link className="header__menu-button --mobile" to="/segmentefforts">
-              My Viewed Segments
-            </Link>
-            <button className="header__menu-button" onClick={handleWipeClick}>
-              Wipe local data
-            </button>
             <button className="header__menu-button" onClick={handleLogOffClick}>
               Log off
             </button>

@@ -19,8 +19,28 @@ export default {
 
     return result.data;
   },
+  getSegment: async id => {
+    const result = await axios.get(`${baseUrl}/segment/${id}`);
+
+    return result.data;
+  },
   getSegmentEffortsByActivity: async activityId => {
     const result = await axios.get(`${baseUrl}/activity/${activityId}/segmentefforts`);
+
+    return result.data;
+  },
+  getSegmentEffortsBySegment: async segmentId => {
+    const result = await axios.get(`${baseUrl}/segment/${segmentId}/segmentefforts`);
+
+    return result.data;
+  },
+  getSegmentEffortsByUser: async userId => {
+    const result = await axios.get(`${baseUrl}/athlete/${userId}/segmentefforts`);
+
+    return result.data;
+  },
+  getSegmentLeaderBoard: async segmentId => {
+    const result = await axios.get(`${baseUrl}/segment/${segmentId}/leaderboard`);
 
     return result.data;
   },

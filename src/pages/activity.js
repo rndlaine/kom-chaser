@@ -1,21 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import useGetRouteId from '../hooks/useGetRouteId';
-import stravaAgents from '../agents/stravaAgents';
 import EffortList from '../components/Effort/EffortList';
-import LeaderBoardContext from '../contexts/LeaderBoardContext';
 import backendAgents from '../agents/backendAgents';
 
 const Activity = ({ location }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [activity, setActivity] = useState({});
+  const [leaderboardBySegmentId, setLeaderboard] = useState({});
   const [efforts, setEfforts] = useState([]);
 
   const { id } = useGetRouteId(location.pathname);
-  const { storeHydrated: leaderboardStoreHydrated, leaderboardBySegmentId, setLeaderboard } = useContext(LeaderBoardContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,18 +29,18 @@ const Activity = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    if (!_.isEmpty(activity) && !_.isEmpty(efforts) && leaderboardStoreHydrated) {
+    if (!_.isEmpty(efforts)) {
       setIsLoading(true);
 
       efforts.forEach(effort => {
-        if (!leaderboardBySegmentId[effort.segmentid] && leaderboardStoreHydrated) {
-          stravaAgents.getSegmentLeaderBoard(effort.segmentid).then(leaderboard => setLeaderboard(effort.segmentid, leaderboard));
-        }
+        backendAgents.getSegmentLeaderBoard(effort.segmentid).then(leaderboard => {
+          setLeaderboard(state => ({ ...state, [effort.segmentid]: leaderboard }));
+        });
       });
 
       setIsLoading(false);
     }
-  }, [efforts, activity, leaderboardStoreHydrated]);
+  }, [efforts, activity]);
 
   return (
     <Layout>

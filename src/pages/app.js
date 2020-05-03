@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import stravaAgents from '../agents/stravaAgents';
 import ActivityList from '../components/Activity/ActivityList';
 import backendAgents from '../agents/backendAgents';
 import AthleteContext from '../contexts/AthleteContext';
@@ -15,7 +14,7 @@ const IndexPage = () => {
   const [gearsById, setGearById] = useState({});
 
   useEffect(() => {
-    if (athleteStoreHydrated) {
+    if (athleteStoreHydrated && athlete.id) {
       setIsLoading(true);
       backendAgents.getActivities(athlete.id).then(activities => {
         setActivities(activities);

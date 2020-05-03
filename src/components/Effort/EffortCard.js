@@ -1,14 +1,22 @@
 import React from 'react';
 import moment from 'moment';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 
 const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, komRating, noClick }) => {
   const formattedDate = moment(effort.start_date).format('YYYY/MM/DD');
 
-  return (
-    <Link className={classNames('card', noClick && '--noClick')} to={`/segment/${effort.segmentid}`}>
+  const cardWrapper = children =>
+    noClick ? (
+      <div className="card --noClick">{children}</div>
+    ) : (
+      <Link className="card" to={`/segment/${effort.segmentid}`}>
+        {children}
+      </Link>
+    );
+
+  return cardWrapper(
+    <>
       <div className="card__stats --header">
         <span>{formattedDate}</span>
 
@@ -35,7 +43,7 @@ const EffortCard = ({ effort, timeToKom, komTime, effortTime, komRatingColor, ko
         <span>KOM Time: {komTime}</span>
         <span>Time to KOM: {timeToKom}</span>
       </div>
-    </Link>
+    </>,
   );
 };
 

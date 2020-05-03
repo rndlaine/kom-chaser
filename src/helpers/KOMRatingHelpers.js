@@ -7,7 +7,7 @@ export const getFormattedDate = seconds =>
     .format('H:mm:ss');
 
 export const getKOMRating = (effort, leaderboard) => {
-  const komSeconds = leaderboard.entries[0].elapsed_time;
+  const komSeconds = leaderboard[0] ? leaderboard[0].elapsed_time : 0;
 
   const effortTime = getFormattedDate(effort.elapsed_time);
   const komTime = getFormattedDate(komSeconds);
@@ -25,6 +25,10 @@ export const getKOMRating = (effort, leaderboard) => {
   } else if (komScore > 0.85 && komScore < 1) {
     komRating = 'A';
     komRatingColor = 'green';
+  }
+
+  if (komSeconds === 0) {
+    komRating = 'NA';
   }
 
   return { timeToKom, komTime, effortTime, komScore, komRatingColor, komRating };

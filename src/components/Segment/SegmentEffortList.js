@@ -22,7 +22,7 @@ const SegmentEffortList = ({ title, isLoading, efforts, leaderboardBySegmentId }
     efforts,
     effort => {
       if (sortBy === 'komScore') {
-        const leaderboard = leaderboardBySegmentId[effort.segment.id];
+        const leaderboard = leaderboardBySegmentId[effort.segmentid];
         const komAnalysis = getKOMRating(effort, leaderboard);
 
         return leaderboard ? komAnalysis[sortBy] : 0;
@@ -47,14 +47,14 @@ const SegmentEffortList = ({ title, isLoading, efforts, leaderboardBySegmentId }
         {!isLoading && (
           <>
             {sortedEfforts.map(effort => {
-              const leaderboard = leaderboardBySegmentId[effort.segment.id];
+              const leaderboard = leaderboardBySegmentId[effort.segmentid];
 
               if (leaderboard) {
                 const komAnalysis = getKOMRating(effort, leaderboard);
-                return <EffortCard noClick key={`${effort.id}-${effort.segment.id}`} effort={effort} {...komAnalysis} />;
+                return <EffortCard noClick key={`${effort.id}-${effort.segmentid}`} effort={effort} {...komAnalysis} />;
               }
 
-              return <LoadingCard key={`${effort.id}-${effort.segment.id}`} />;
+              return <LoadingCard key={`${effort.id}-${effort.segmentid}`} />;
             })}
           </>
         )}
