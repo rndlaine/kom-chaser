@@ -9,6 +9,10 @@ a {
   text-decoration: none;
 }
 
+p {
+  @extend %font-type-label;
+}
+
 @supports (zoom: 2) {
   input[type='radio'],
   input[type='checkbox'] {

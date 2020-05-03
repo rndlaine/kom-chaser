@@ -29,7 +29,7 @@ const Activity = ({ location }) => {
 
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Activity" />
       <EffortList isLoading={isLoading} activity={activity} efforts={efforts} />
     </Layout>
   );

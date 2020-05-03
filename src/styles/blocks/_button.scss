@@ -1,0 +1,33 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.button {
+  @extend %font-type-subheader;
+  background-color: white;
+  border-radius: rem(10);
+  padding: rem(20);
+  margin-right: rem(10);
+  box-shadow: 10px 10px 15px -15px rgba(0, 0, 0, 0.5);
+
+  &.--disabled {
+    opacity: 0.6;
+  }
+
+  &__icon {
+    width: rem(30);
+    margin-left: rem(20);
+
+    &.--spin {
+      animation-name: spin;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+}

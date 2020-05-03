@@ -25,6 +25,9 @@ const HeaderMenu = ({ profile }) => {
         <Link className="header__link" to="/bestsegmentefforts">
           My Best Segments
         </Link>
+        <Link className="header__link" to="/sync">
+          Sync
+        </Link>
       </div>
 
       <div className="header__menu" onClick={() => setIsOpen(!isOpen)}>
@@ -37,6 +40,9 @@ const HeaderMenu = ({ profile }) => {
             </Link>
             <Link className="header__menu-button --mobile" to="/bestsegmentefforts">
               My Best Segments
+            </Link>
+            <Link className="header__menu-button --mobile" to="/Sync">
+              Sync
             </Link>
             <button className="header__menu-button" onClick={handleLogOffClick}>
               Log off

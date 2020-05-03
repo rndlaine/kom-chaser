@@ -5,6 +5,7 @@ import Select from 'react-select';
 
 import ActivityCard from './ActivityCard';
 import LoadingCard from './LoadingCard';
+import EmptyCard from './EmptyCard';
 
 const options = [
   { value: '', label: 'Date' },
@@ -49,6 +50,7 @@ const ActivityList = ({ gearsById, activities, isLoading }) => {
           })}
 
         {isLoading && _.times(50, index => <LoadingCard key={index} />)}
+        {!isLoading && _.isEmpty(activities) && <EmptyCard text="Nothing to show..." />}
       </section>
     </>
   );

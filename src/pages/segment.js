@@ -26,7 +26,7 @@ const Segment = ({ location }) => {
 
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Segment" />
       <SegmentEffortList isLoading={isLoading} segment={segment} efforts={segmentEfforts} />
     </Layout>
   );

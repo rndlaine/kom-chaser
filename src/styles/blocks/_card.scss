@@ -94,4 +94,13 @@
   &__rating-value {
     @extend %font-type-rating;
   }
+
+  &__link {
+    color: cc(main);
+    text-decoration: underline;
+  }
+
+  &__empty {
+    @extend %font-type-label;
+  }
 }

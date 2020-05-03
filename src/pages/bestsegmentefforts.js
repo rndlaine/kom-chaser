@@ -25,7 +25,7 @@ const BestSegmentEfforts = () => {
 
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Best Effort" />
       <SegmentEffortList noClick={false} title="All Segments Efforts" isLoading={isLoading} efforts={segmentEfforts} />
     </Layout>
   );
