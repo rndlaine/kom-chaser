@@ -8,7 +8,9 @@ const EffortCard = ({ effort, noClick }) => {
 
   const cardWrapper = children =>
     noClick ? (
-      <div className="card --noClick">{children}</div>
+      <a className="card" href={`https://www.strava.com/segments/${effort.segmentid}?filter=overall`} rel="noopener noreferrer" target="_blank">
+        {children}
+      </a>
     ) : (
       <Link className="card" to={`/segment/${effort.segmentid}`}>
         {children}

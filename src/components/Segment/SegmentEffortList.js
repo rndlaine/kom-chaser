@@ -5,6 +5,7 @@ import LoadingCard from '../Activity/LoadingCard';
 import EmptyCard from '../Activity/EmptyCard';
 import _ from 'lodash';
 import Select from 'react-select';
+import stravaLogo from '../../images/strava-logo.png';
 
 const options = [
   { value: '', label: 'Date' },
@@ -22,7 +23,9 @@ const SegmentEffortList = ({ title, isLoading, efforts, noClick }) => {
   return (
     <>
       <section className="activity-list__header">
-        <h1 className="label__header">{title || `Segments Efforts: ${_.get(efforts, '[0].name', 'Activity')}`}</h1>
+        <a className="label__header" href={`https://www.strava.com/segments/${_.get(efforts, '[0].segmentid')}?filter=overall`} rel="noopener noreferrer" target="_blank">
+          {title || `Segments Efforts: ${_.get(efforts, '[0].name', 'Activity')}`}
+        </a>
         <div className="activity-list__filter">
           <h1 className="label__subheader">Sort by</h1>
           <Select className="activity-list__select" options={options} onChange={select => setSortBy(select.value)} />
