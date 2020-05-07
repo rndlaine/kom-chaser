@@ -24,11 +24,10 @@ const SyncPage = () => {
       <SEO title="Sync" />
 
       <div className="jumbotron">
-        <p>Because of Strava's API design, we are limited in the number of calls we can do. For this reason, you can sync you activities in KOM Chaser's backend.</p>
         <p>
-          Sometimes, it can take a couple of tries to complete the sync and it may fail if you do too much call in a 15 mins timeframe but once the initial sync is done, things
-          should go A-1.
+          Because of Strava's API design, we are limited in the number of calls we can do in a timeframe. For this reason, you can sync your activities in KOM Chaser's backend.
         </p>
+        <p>It can take a couple of minutes (15-30) to complete the sync if you have a lot of activities.</p>
         <br />
         <p>Peace!</p>
       </div>
