@@ -41,7 +41,7 @@ const HeaderMenu = ({ profile }) => {
             <Link className="header__menu-button --mobile" to="/bestsegmentefforts">
               My Best Segments
             </Link>
-            <Link className="header__menu-button --mobile" to="/Sync">
+            <Link className="header__menu-button --mobile" to="/sync">
               Sync
             </Link>
             <button className="header__menu-button" onClick={handleLogOffClick}>

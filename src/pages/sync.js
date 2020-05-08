@@ -53,16 +53,8 @@ const SyncPage = () => {
       </div>
 
       <div className="sync__buttons">
-        <button className={classNames('button --full-width', isSyncing && '--disabled')} disabled={isSyncing} onClick={() => handleSync(backendAgents.syncActivities)}>
-          Sync Activities
-          <img alt="" className={classNames('button__icon', isSyncing && '--spin')} src={refresh} />
-        </button>
-        <button className={classNames('button --full-width', isSyncing && '--disabled')} disabled={isSyncing} onClick={() => handleSync(backendAgents.syncEfforts)}>
-          Sync Efforts
-          <img alt="" className={classNames('button__icon', isSyncing && '--spin')} src={refresh} />
-        </button>
-        <button className={classNames('button --full-width', isSyncing && '--disabled')} disabled={isSyncing} onClick={() => handleSync(backendAgents.syncLeaderboard)}>
-          Sync Leaderboard
+        <button className={classNames('button --full-width', isSyncing && '--disabled')} disabled={isSyncing} onClick={() => handleSync(backendAgents.sync)}>
+          Sync
           <img alt="" className={classNames('button__icon', isSyncing && '--spin')} src={refresh} />
         </button>
       </div>

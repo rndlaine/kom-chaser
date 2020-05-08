@@ -75,33 +75,9 @@ export default {
 
     return result.data;
   },
-  syncActivities: async userId => {
+  sync: async userId => {
     const result = await axios.post(
-      `${baseUrl}/athlete/${userId}/sync-activity`,
-      { accessToken: localStorage.getItem('access_token') },
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
-        crossDomain: true,
-      },
-    );
-
-    return result.data;
-  },
-  syncEfforts: async userId => {
-    const result = await axios.post(
-      `${baseUrl}/athlete/${userId}/sync-efforts`,
-      { accessToken: localStorage.getItem('access_token') },
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
-        crossDomain: true,
-      },
-    );
-
-    return result.data;
-  },
-  syncLeaderboard: async userId => {
-    const result = await axios.post(
-      `${baseUrl}/athlete/${userId}/sync-leaderboard`,
+      `${baseUrl}/athlete/${userId}/sync`,
       { accessToken: localStorage.getItem('access_token') },
       {
         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
