@@ -67,7 +67,7 @@ const SyncPage = () => {
         </button>
       </div>
 
-      {!isSyncing && (
+      {isSyncing && (
         <>
           <div className="loader__center">
             <Loader />
