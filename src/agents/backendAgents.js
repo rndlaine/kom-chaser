@@ -3,6 +3,14 @@ import axios from 'axios';
 const baseUrl = process.env.GATSBY_BACKEND_API_URL;
 
 export default {
+  getAthlete: async athleteId => {
+    const result = await axios.get(`${baseUrl}/athlete/${athleteId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+      crossDomain: true,
+    });
+
+    return result.data;
+  },
   getActivities: async athleteId => {
     const result = await axios.get(`${baseUrl}/athlete/${athleteId}/activity`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },

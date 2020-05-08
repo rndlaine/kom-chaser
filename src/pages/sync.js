@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import classNames from 'classnames';
-import _ from 'lodash';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -10,13 +9,32 @@ import refresh from '../images/icons/refresh.svg';
 import Loader from '../components/Loader/Loader';
 
 const SyncPage = () => {
-  const [isSyncing, setIsSyncing] = useState(false);
-  const { athlete } = useContext(AthleteContext);
+  const [isSyncing, setSyncing] = useState(false);
+  const [syncStatus, setSyncStatus] = useState({});
+  const { storeHydrated, athlete } = useContext(AthleteContext);
+
+  useEffect(() => {
+    setSyncing(syncStatus.issyncing);
+  }, [syncStatus]);
+
+  useEffect(() => {
+    if (storeHydrated) {
+      backendAgents.getAthlete(athlete.id).then(result => setSyncStatus(result));
+
+      const interval = setInterval(() => {
+        backendAgents.getAthlete(athlete.id).then(result => setSyncStatus(result));
+      }, 2000);
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [storeHydrated]);
 
   const handleSync = callback => {
     if (athlete.id) {
-      setIsSyncing(true);
-      callback(athlete.id).finally(() => setIsSyncing(false));
+      setSyncing(true);
+      callback(athlete.id).finally(() => setSyncing(false));
     }
   };
 
@@ -55,7 +73,7 @@ const SyncPage = () => {
             <Loader />
           </div>
           <div className="loader__center">
-            <span>Syncing your data!</span>
+            <span>Syncing your data! You can close this tab or wait after the sync.</span>
           </div>
         </>
       )}
