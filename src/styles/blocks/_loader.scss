@@ -6,7 +6,8 @@ $shadow: #dbe3f4;
 .loader__center {
   padding-top: rem(150);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   @extend %font-type-small-title;
 
   & + & {

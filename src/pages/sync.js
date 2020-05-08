@@ -67,13 +67,14 @@ const SyncPage = () => {
         </button>
       </div>
 
-      {isSyncing && (
+      {!isSyncing && (
         <>
           <div className="loader__center">
             <Loader />
           </div>
           <div className="loader__center">
-            <span>Syncing your data! You can close this tab or wait after the sync.</span>
+            <span>Syncing your data!</span>
+            <span>You can close this tab or wait for the sync to complete.</span>
           </div>
         </>
       )}
