@@ -16,6 +16,24 @@
   }
 }
 
+%font-type-small-title {
+  font-family: Gidole;
+  font-size: rem(30);
+  font-weight: 900;
+
+  @include tablet {
+    font-family: Gidole;
+    font-size: rem(40);
+    font-weight: 900;
+  }
+
+  @include desktop {
+    font-family: Gidole;
+    font-size: rem(50);
+    font-weight: 900;
+  }
+}
+
 %font-type-header {
   font-family: Gidole;
   font-size: rem(20);
