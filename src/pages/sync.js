@@ -23,7 +23,7 @@ const SyncPage = () => {
 
       const interval = setInterval(() => {
         backendAgents.getAthlete(athlete.id).then(result => setSyncStatus(result));
-      }, 2000);
+      }, 10000);
 
       return () => {
         clearInterval(interval);
