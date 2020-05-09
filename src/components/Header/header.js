@@ -19,7 +19,7 @@ const Header = ({ siteTitle, profile }) => {
   return (
     <header className="header">
       <Link to="/app" className="header__title">
-        <img className="header__logo" src={stravaLogo} />
+        <img alt="" className="header__logo" src={stravaLogo} />
         {data.site.siteMetadata.title}
       </Link>
       {profile && <HeaderMenu profile={profile} />}

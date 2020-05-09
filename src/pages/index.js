@@ -21,7 +21,7 @@ const IndexPage = () => {
             <br />
             Go find your next target!
           </p>
-          <Link to="/app" className="landing__button">
+          <Link to="/activities" className="landing__button">
             <img className="landing__strava" src={stravaButton} />
           </Link>
         </article>

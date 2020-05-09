@@ -19,7 +19,7 @@ const HeaderMenu = ({ profile }) => {
   return (
     <>
       <div className="header__links">
-        <Link className="header__link" to="/app">
+        <Link className="header__link" to="/activities">
           My Activities
         </Link>
         <Link className="header__link" to="/bestsegmentefforts">
@@ -35,7 +35,7 @@ const HeaderMenu = ({ profile }) => {
 
         {isOpen && (
           <div className="header__menu-open">
-            <Link className="header__menu-button --mobile" to="/app">
+            <Link className="header__menu-button --mobile" to="/activities">
               My Activities
             </Link>
             <Link className="header__menu-button --mobile" to="/bestsegmentefforts">

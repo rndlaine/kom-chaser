@@ -1,42 +1,40 @@
-import React, { useContext, useEffect, useState } from 'react';
-import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { usePosition } from 'use-position';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import ActivityList from '../components/Activity/ActivityList';
-import backendAgents from '../agents/backendAgents';
-import AthleteContext from '../contexts/AthleteContext';
+import windAgents from '../agents/windAgents';
 
 const IndexPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { storeHydrated: athleteStoreHydrated, athlete } = useContext(AthleteContext);
-  const [activities, setActivities] = useState([]);
-  const [gearsById, setGearById] = useState({});
+  const [coords, setCoords] = useState({});
+  const [city, setCity] = useState('Quebec');
+  const [wind, setWind] = useState();
+  const { latitude: posLat, longitude: posLon } = usePosition();
 
   useEffect(() => {
-    if (athleteStoreHydrated && athlete.id) {
-      setIsLoading(true);
-      backendAgents.getActivities(athlete.id).then(activities => {
-        setActivities(activities);
-
-        const activitiesWithGear = activities.filter(activity => !!activity.gear_id);
-        const uniqueByGearIds = _.uniqBy(activitiesWithGear, activity => activity.gear_id);
-
-        uniqueByGearIds.forEach(activity => {
-          backendAgents.getGear(activity.gear_id).then(gear => setGearById(state => ({ ...state, [gear.id]: gear })));
-        });
-
-        setIsLoading(false);
-      });
+    if (city) {
+      windAgents.getCoordinates(city).then(coordinates => setCoords(coordinates));
     }
-  }, [athleteStoreHydrated]);
+  }, [city]);
 
-  const sortedActivities = _.orderBy(activities, 'id', 'desc');
+  useEffect(() => {
+    const lat = coords.lat || posLat;
+    const lon = coords.lon || posLon;
+
+    if (lat && lon) {
+      windAgents.getCurrentWind(52.939915, -73.549133).then(data => setWind(data));
+    }
+  }, [coords, posLat, posLon]);
 
   return (
     <Layout>
       <SEO title="App" />
-      <ActivityList isLoading={isLoading} activities={sortedActivities} gearsById={gearsById} />
+      {wind && (
+        <>
+          <p>Wind speed: {wind.speed}</p>
+          <p>Wind deg: {wind.deg}</p>
+        </>
+      )}
     </Layout>
   );
 };
