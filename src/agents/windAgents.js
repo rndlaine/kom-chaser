@@ -1,6 +1,12 @@
+import _ from 'lodash';
 import axios from 'axios';
 
 const apiKey = process.env.GATSBY_WEATHER_API_KEY;
+const meteoStatApiKey = process.env.GATSBY_METEOSTAT_API_KEY;
+
+function average(acc, ele, index) {
+  return (acc + ele) / (index + 1);
+}
 
 export default {
   getCurrentWind: async (lat, lon) => {

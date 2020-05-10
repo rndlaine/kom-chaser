@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 
 import running from '../../images/icons/running.svg';
 import cycling from '../../images/icons/cycling.svg';
-import { getFormattedDate } from '../../helpers/KOMRatingHelpers';
+import { getFormattedDate } from '../../helpers/dateHelpers';
 
 const ActivityCard = ({ activity, gear }) => {
   const date = moment(activity.start_date);

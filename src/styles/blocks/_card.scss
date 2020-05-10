@@ -69,6 +69,15 @@
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+  }
+
+  &__rating-label {
+    color: cc(text);
+    margin-right: rem(10);
+  }
+
+  &__rating-value {
+    @extend %font-type-rating;
 
     &.--green {
       color: green;
@@ -85,15 +94,10 @@
     &.--red {
       color: red;
     }
-  }
 
-  &__rating-label {
-    color: cc(text);
-    margin-right: rem(10);
-  }
-
-  &__rating-value {
-    @extend %font-type-rating;
+    & + & {
+      margin-left: rem(5);
+    }
   }
 
   &__link {
