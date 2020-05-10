@@ -6,11 +6,10 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import windAgents from '../agents/windAgents';
 import backendAgents from '../agents/backendAgents';
-import Compass from '../components/Compass/Compass';
 import { getCardinal } from '../helpers/cardinalHelpers';
 import SegmentEffortList from '../components/Segment/SegmentEffortList';
 import AthleteContext from '../contexts/AthleteContext';
-import { getWindKOMScore } from '../helpers/scoreHelpers';
+import { getWindFactor } from '../helpers/scoreHelpers';
 
 const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,24 +19,7 @@ const IndexPage = () => {
   const [segmentEffortsBySegmentId, setSegmentEffortsBySegmentId] = useState([]);
 
   const { latitude: posLat, longitude: posLon } = usePosition();
-  const { storeHydrated, athlete } = useContext(AthleteContext);
-
-  useEffect(() => {
-    if (athlete && athlete.id && wind) {
-      backendAgents.getBestSegmentEffortsByUser(athlete.id).then(async efforts => {
-        const promises = efforts.map(effort => backendAgents.getSegment(effort.segmentid));
-        const result = await Promise.all(promises);
-
-        const updatedEfforts = efforts.map(effort => {
-          const seg = result.find(item => item.id === effort.segmentid);
-          const updatedEffort = { ...effort, direction: seg.direction };
-          return { ...updatedEffort, windKomScore: getWindKOMScore(updatedEffort, wind) };
-        });
-
-        setSegmentEffortsBySegmentId(_.keyBy(updatedEfforts, 'segmentid'));
-      });
-    }
-  }, [storeHydrated, wind]);
+  const { athlete } = useContext(AthleteContext);
 
   useEffect(() => {
     if (city) {
@@ -53,7 +35,20 @@ const IndexPage = () => {
     if (lat && lon) {
       windAgents.getCurrentWind(lat, lon).then(data => {
         setWind(data);
-        setIsLoading(false);
+
+        backendAgents.getClosestSegmentEffortsByUser(athlete.id, lat, lon).then(async efforts => {
+          const promises = efforts.map(effort => backendAgents.getSegment(effort.segmentid));
+          const result = await Promise.all(promises);
+
+          const updatedEfforts = efforts.map(effort => {
+            const seg = result.find(item => item.id === effort.segmentid);
+            const updatedEffort = { ...effort, direction: seg.direction };
+            return { ...updatedEffort, start_date: null, windFactor: getWindFactor(updatedEffort, data) };
+          });
+
+          setSegmentEffortsBySegmentId(_.keyBy(updatedEfforts, 'segmentid'));
+          setIsLoading(false);
+        });
       });
     }
   }, [coords, posLat, posLon]);
@@ -63,8 +58,15 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="App" />
-      {wind && <Compass direction={getCardinal(wind.deg)} speed={wind.speed} />}
-      <SegmentEffortList noClick={false} title="All Segments Efforts" isLoading={isLoading} efforts={segmentEfforts} />
+
+      <SegmentEffortList
+        noClick={false}
+        title="Today's Forecast"
+        subtitle={wind ? `Wind Direction: ${getCardinal(wind.deg)} - Wind Speed: ${wind.speed.toFixed(1)} km/h` : ''}
+        isLoading={isLoading}
+        options={[{ value: 'windFactor.factor', label: 'Wind Factor' }]}
+        efforts={segmentEfforts}
+      />
     </Layout>
   );
 };

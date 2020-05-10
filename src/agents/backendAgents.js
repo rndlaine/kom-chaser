@@ -75,6 +75,14 @@ export default {
 
     return result.data;
   },
+  getClosestSegmentEffortsByUser: async (userId, lat, lon) => {
+    const result = await axios.get(`${baseUrl}/athlete/${userId}/closestsegmentefforts/${lat}/${lon}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+      crossDomain: true,
+    });
+
+    return result.data;
+  },
   sync: async userId => {
     const result = await axios.post(
       `${baseUrl}/athlete/${userId}/sync`,

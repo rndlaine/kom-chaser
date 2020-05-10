@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 import { getKOMRatings } from '../../helpers/scoreHelpers';
 
 const EffortCard = ({ effort, noClick }) => {
-  const formattedDate = moment(effort.start_date).format('YYYY/MM/DD');
+  const formattedDate = effort.start_date ? moment(effort.start_date).format('YYYY/MM/DD') : null;
 
   const cardWrapper = children =>
     noClick ? (
@@ -19,22 +19,22 @@ const EffortCard = ({ effort, noClick }) => {
     );
 
   const komScore = (effort.komScore * 100).toFixed(0);
-  const windKomScore = ((effort.windKomScore || 0) * 100).toFixed(0);
 
   return cardWrapper(
     <>
       <div className="card__stats --header">
-        <span>{formattedDate}</span>
+        {formattedDate && <span>{formattedDate}</span>}
+
+        {effort.windFactor && (
+          <div className="card__rating">
+            <span className="card__rating-label">Current Wind Factor</span>
+            <span className={`card__rating-value --${effort.windFactor.color}`}>{((effort.windFactor.factor || 0) * 100).toFixed(0)} %</span>
+          </div>
+        )}
 
         <div className="card__rating">
           <span className="card__rating-label">KOM Reachability Score</span>
           <span className={`card__rating-value --${getKOMRatings(effort.komScore)}`}>{komScore} %</span>
-          {effort.windKomScore && (
-            <>
-              <span className="card__rating-value">-></span>
-              <span className={`card__rating-value --${getKOMRatings(effort.windKomScore)}`}>{windKomScore} %</span>
-            </>
-          )}
         </div>
       </div>
 

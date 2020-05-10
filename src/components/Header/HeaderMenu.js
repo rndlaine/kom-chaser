@@ -19,6 +19,9 @@ const HeaderMenu = ({ profile }) => {
   return (
     <>
       <div className="header__links">
+        <Link className="header__link" to="/app">
+          Today's Forecast
+        </Link>
         <Link className="header__link" to="/activities">
           My Activities
         </Link>
@@ -37,6 +40,9 @@ const HeaderMenu = ({ profile }) => {
           <div className="header__menu-open">
             <Link className="header__menu-button --mobile" to="/activities">
               My Activities
+            </Link>
+            <Link className="header__menu-button --mobile" to="/app">
+              Today's Forecast
             </Link>
             <Link className="header__menu-button --mobile" to="/bestsegmentefforts">
               My Best Segments

@@ -1,11 +1,13 @@
-const getWindKOMScore = (effort, currentWind) => {
+const getWindFactor = (effort, currentWind) => {
   if (!currentWind) {
     return effort.komScore;
   }
 
-  const factor = Math.abs(effort.direction - currentWind.deg) / 180;
+  const factor = 1 - Math.abs(effort.direction - currentWind.deg) / 180;
 
-  return effort.komScore * factor;
+  const color = factor > 0 ? 'green' : 'red';
+
+  return { factor, color };
 };
 
 const getKOMRatings = komScore => {
@@ -21,4 +23,4 @@ const getKOMRatings = komScore => {
   return komRatingColor;
 };
 
-export { getWindKOMScore, getKOMRatings };
+export { getWindFactor, getKOMRatings };

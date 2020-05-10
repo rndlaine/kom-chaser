@@ -14,6 +14,11 @@
     }
   }
 
+  &__title {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__filter {
     display: flex;
     align-items: center;

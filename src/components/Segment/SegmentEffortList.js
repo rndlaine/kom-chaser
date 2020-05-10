@@ -5,9 +5,8 @@ import LoadingCard from '../Activity/LoadingCard';
 import EmptyCard from '../Activity/EmptyCard';
 import _ from 'lodash';
 import Select from 'react-select';
-import stravaLogo from '../../images/strava-logo.png';
 
-const options = [
+const initialOptions = [
   { value: '', label: 'Date' },
   { value: 'komScore', label: 'KOM Reachability Score' },
   { value: 'average_watts', label: 'Average Power' },
@@ -16,19 +15,23 @@ const options = [
   { value: 'total_elevation_gain', label: 'Elevation' },
 ];
 
-const SegmentEffortList = ({ title, isLoading, efforts, noClick }) => {
+const SegmentEffortList = ({ title, options = [], subtitle, isLoading, efforts, noClick }) => {
   const [sortBy, setSortBy] = useState();
-  const sortedEfforts = _.orderBy(efforts, effort => effort[sortBy], 'desc');
+  const sortedEfforts = _.orderBy(efforts, effort => _.get(effort, sortBy), 'desc');
+
+  const finalOptions = [...options, ...initialOptions];
 
   return (
     <>
       <section className="activity-list__header">
-        <a className="label__header" href={`https://www.strava.com/segments/${_.get(efforts, '[0].segmentid')}?filter=overall`} rel="noopener noreferrer" target="_blank">
-          {title || `Segments Efforts: ${_.get(efforts, '[0].name', 'Activity')}`}
-        </a>
+        <div className="activity-list__title">
+          <span className="label__header">{title || `Segments Efforts: ${_.get(efforts, '[0].name', 'Activity')}`}</span>
+          {subtitle && <span className="label__subheader">{subtitle}</span>}
+        </div>
+
         <div className="activity-list__filter">
           <h1 className="label__subheader">Sort by</h1>
-          <Select className="activity-list__select" options={options} onChange={select => setSortBy(select.value)} />
+          <Select className="activity-list__select" options={finalOptions} onChange={select => setSortBy(select.value)} />
         </div>
       </section>
 
