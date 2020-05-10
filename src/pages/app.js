@@ -13,36 +13,27 @@ import { getWindFactor } from '../helpers/scoreHelpers';
 
 const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [coords, setCoords] = useState({});
-  const [city, setCity] = useState('Quebec');
   const [wind, setWind] = useState();
   const [segmentEffortsBySegmentId, setSegmentEffortsBySegmentId] = useState([]);
 
-  const { latitude: posLat, longitude: posLon } = usePosition();
-  const { athlete } = useContext(AthleteContext);
+  // const { latitude: posLat, longitude: posLon } = usePosition();
+  const { storeHydrated, athlete } = useContext(AthleteContext);
 
   useEffect(() => {
-    if (city) {
+    if (storeHydrated) {
       setIsLoading(true);
-      windAgents.getCoordinates(city).then(coordinates => setCoords(coordinates));
-    }
-  }, [city]);
+      // TODO: Handle Custom Lat Long
+      const lat = 46.8059827;
+      const lon = -71.2425497;
 
-  useEffect(() => {
-    const lat = coords.lat || posLat;
-    const lon = coords.lon || posLon;
-
-    if (lat && lon) {
       windAgents.getCurrentWind(lat, lon).then(data => {
         setWind(data);
-
         backendAgents.getClosestSegmentEffortsByUser(athlete.id, lat, lon).then(async efforts => {
           const promises = efforts.map(effort => backendAgents.getSegment(effort.segmentid));
           const result = await Promise.all(promises);
 
           const updatedEfforts = efforts.map(effort => {
-            const seg = result.find(item => item.id === effort.segmentid);
-            const updatedEffort = { ...effort, direction: seg.direction };
+            const updatedEffort = { ...effort, direction: result.find(item => item.id === effort.segmentid).direction };
             return { ...updatedEffort, start_date: null, windFactor: getWindFactor(updatedEffort, data) };
           });
 
@@ -51,9 +42,7 @@ const IndexPage = () => {
         });
       });
     }
-  }, [coords, posLat, posLon]);
-
-  const segmentEfforts = _.values(segmentEffortsBySegmentId);
+  }, [storeHydrated]);
 
   return (
     <Layout>
@@ -61,11 +50,11 @@ const IndexPage = () => {
 
       <SegmentEffortList
         noClick={false}
-        title="Today's Forecast"
+        title={`Today's Forecast for Quebec City`}
         subtitle={wind ? `Wind Direction: ${getCardinal(wind.deg)} - Wind Speed: ${wind.speed.toFixed(1)} km/h` : ''}
         isLoading={isLoading}
         options={[{ value: 'windFactor.factor', label: 'Wind Factor' }]}
-        efforts={segmentEfforts}
+        efforts={_.values(segmentEffortsBySegmentId)}
       />
     </Layout>
   );
