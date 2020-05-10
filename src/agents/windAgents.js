@@ -1,16 +1,8 @@
-import _ from 'lodash';
 import axios from 'axios';
-
-const apiKey = process.env.GATSBY_WEATHER_API_KEY;
-const meteoStatApiKey = process.env.GATSBY_METEOSTAT_API_KEY;
-
-function average(acc, ele, index) {
-  return (acc + ele) / (index + 1);
-}
 
 export default {
   getCurrentWind: async (lat, lon) => {
-    const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+    const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.GATSBY_WEATHER_API_KEY}`);
 
     const { wind } = result.data;
     return { ...wind, speed: wind.speed * 3.6 };
